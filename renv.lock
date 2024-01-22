@@ -985,33 +985,6 @@
       ],
       "Hash": "15da5a8412f317beeee6175fbc76f4bb"
     },
-    "pins": {
-      "Package": "pins",
-      "Version": "1.3.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": [
-        "R",
-        "cli",
-        "digest",
-        "ellipsis",
-        "fs",
-        "generics",
-        "glue",
-        "httr",
-        "jsonlite",
-        "lifecycle",
-        "magrittr",
-        "purrr",
-        "rappdirs",
-        "rlang",
-        "tibble",
-        "whisker",
-        "withr",
-        "yaml"
-      ],
-      "Hash": "e240e373ac8805080423d0fb985d87b0"
-    },
     "pkgconfig": {
       "Package": "pkgconfig",
       "Version": "2.0.3",
@@ -1492,28 +1465,6 @@
       ],
       "Hash": "f561504ec2897f4d46f0c7657e488ae1"
     },
-    "unpivotr": {
-      "Package": "unpivotr",
-      "Version": "0.6.3",
-      "Source": "Repository",
-      "Repository": "RSPM",
-      "Requirements": [
-        "R",
-        "cellranger",
-        "dplyr",
-        "forcats",
-        "magrittr",
-        "methods",
-        "pillar",
-        "purrr",
-        "rlang",
-        "tibble",
-        "tidyr",
-        "tidyselect",
-        "xml2"
-      ],
-      "Hash": "2de380f22fd8e5d83fa456f48af6e40e"
-    },
     "utf8": {
       "Package": "utf8",
       "Version": "1.2.4",
@@ -1583,13 +1534,6 @@
         "withr"
       ],
       "Hash": "390f9315bc0025be03012054103d227c"
-    },
-    "whisker": {
-      "Package": "whisker",
-      "Version": "0.4.1",
-      "Source": "Repository",
-      "Repository": "RSPM",
-      "Hash": "c6abfa47a46d281a7d5159d0a8891e88"
     },
     "withr": {
       "Package": "withr",
