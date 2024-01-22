@@ -1,0 +1,401 @@
+---
+title: 'Efficient data manipulation with {{< fa brands r-project >}} and {{< fa brands python >}}'
+# subtitle: "You too can be a pro!!!"
+author: 'Pascal Guillot & Philippe Massicotte'
+date: '2024-02-05'
+date-format: 'long'
+institute: 'Laval University'
+chalkboard:
+  theme: whiteboard
+format:
+  revealjs:
+    theme:
+      - solarized
+      - theme.scss
+    fig-dpi: 300
+    fig-align: center
+    highlight-style: a11y
+    height: 1080
+    width: 1920
+    slide-number: c/t
+    transition: fade
+    preview-links: true
+    hide-inactive-cursor: true
+
+knitr:
+  opts_chunk:
+    dev: 'ragg_png'
+    retina: 1
+    dpi: 300
+
+execute:
+  freeze: auto
+  cache: true
+  echo: true
+  fig-width: 6
+  fig-height: 4
+
+editor: source
+
+editor_options:
+  chunk_output_type: console
+---
+
+```{r}
+#| label: setup
+#| cache: false
+#| include: false
+library(tidyverse)
+library(ggpmthemes)
+# library(gt)
+
+# remotes::install_github("gadenbuie/countdown")
+# library(countdown)
+
+theme_set(theme_maven())
+theme_update(
+  panel.border = element_blank(),
+  axis.ticks = element_blank()
+)
+
+# knitr::knit_hooks$set(optipng = knitr::hook_optipng)
+
+# https://quarto.org/docs/presentations/revealjs/themes.html
+# https://emilhvitfeldt.github.io/talk-purrr-ocrug-2023/#/creating-data.frames
+# https://github.com/EmilHvitfeldt/talk-purrr-ocrug-2023/blob/main/index.qmd
+```
+
+## Who am I
+
+:::: {.columns}
+
+::: {.column width='40%'}
+
+<img src="images/myname.png" width="400px"/>
+
+<br>
+
+::: {layout="[[1,1], [1]]"}
+
+![](images/logos/takuvik.svg)
+
+![](images/logos/sn.png)
+
+![](images/logos/ulaval.svg)
+
+:::
+
+:::
+
+::: {.column width='5%'}
+:::
+
+::: {.column width='55%'}
+
+[Research assistant at Takuvik (Laval University)]{style="font-weight:bold;font-size:1.5em"}
+
+<small>_Remote sensing, modelling, data science, data visualization_</small><br>
+in
+{{< fa brands github >}} [My GitHub](https://github.com/PMassicotte){style="font-weight:bold;"}
+
+{{< fa brands twitter >}} [Follow me on Twitter](https://twitter.com/philmassicotte){style="font-weight:bold;"}
+
+{{< fa brands mastodon >}} [Follow me on Mastodon](https://fosstodon.org/@philmassicotte){style="font-weight:bold;"}
+
+{{< fa link >}} [www.pmassicotte.com](https://www.pmassicotte.com){style="font-weight:bold;"}
+
+:::
+::::
+
+## Outline
+
+::: {.incremental .r-fit-text}
+
+- [**Part 1 (~ 30 minutes)**]{style="font-size:1.25em"}
+
+  - Recap of what is tidy data and why it is important?
+
+- [**Part 2 (~ 60 minutes)**]{style="font-size:1.25em"}
+
+  - Understand the basics of data manipulation techniques using R.
+
+  - Learn how to manipulate and transform raw data into a format suitable for analysis using `dplyr` and `tidyr`.
+    - **filtering** rows
+    - **grouping**, **summarizing** / **aggregating** rows
+    - **joining** data from multiple sources
+    - **pivoting** data, **separating columns** into multiple columns
+
+- [**BREAK! (30 minutes)**]{style="font-size:1.25em;"} {{< fa mug-hot >}} {{< fa cookie-bite >}}
+
+- [**Part 3 (~ 90 minutes)**]{style="font-size:1.25em"}
+
+  1. Working on your own data
+  2. Data challenge: _SQL Murder Mystery_
+
+:::
+
+## Context
+
+:::: {.columns}
+
+::: {.column width='70%'}
+
+<figure>
+<center>
+<img src="images/environmental-data-science-r4ds-general.png" alt="The expanded version of the classic Grolemund & Wickham R4DS workflow, including environmental data & sci comm bookends! Envisioned by Dr. Julia Lowndes for her useR!2019 keynote. Please cite this illustration as: Updated from Grolemund & Wickham's classis R4DS schematic, envisioned by Dr. Julia Lowndes for her 2019 useR! keynote talk and illustrated by Allison Horst." style="width:85%"/>
+<figcaption>Artwork by Allison Horst</figcaption>
+</center>
+</figure>
+
+:::
+
+::: {.column width='30%'}
+
+> [Data preprocessing is one of the main steps in the data science project life cycle which involves **converting raw data into a refined form amenable to data analysis**. [Source: towards data science](https://towardsdatascience.com/three-critical-elements-of-data-preprocessing-part-2-2078110ae8e7)]{style="font-size:0.9em;"}
+
+:::
+
+::::
+
+## Context
+
+:::: {.columns}
+
+::: {.column width='70%'}
+
+<figure>
+<center>
+<img src="images/environmental-data-science-r4ds-general.png" alt="The expanded version of the classic Grolemund & Wickham R4DS workflow, including environmental data & sci comm bookends! Envisioned by Dr. Julia Lowndes for her useR!2019 keynote. Please cite this illustration as: Updated from Grolemund & Wickham's classis R4DS schematic, envisioned by Dr. Julia Lowndes for her 2019 useR! keynote talk and illustrated by Allison Horst." style="width:85%"/>
+<figcaption>Artwork by Allison Horst</figcaption>
+</center>
+</figure>
+
+:::
+
+::: {.column width='30%'}
+
+> [**It is often said that 80% of data analysis is spent on cleaning and preparing data.** And it's not just a first step, but it must be repeated many over the course of analysis as new problems come to light or new data is collected.]{style="font-size:0.9em;"}
+
+:::
+
+::::
+
+# Importing data {background-color="#2C404A"}
+
+## Data frames
+
+::: {.incremental}
+
+- **Data frames** are important objects in R which are created when reading (most) tabular text files.
+
+- The most useful data structure for data scientists.
+- They allow for efficient data manipulation:
+  - Filtering
+  - Summarizing
+  - Aggregating
+  - Joining
+  - And much more!
+
+:::
+
+## Data frames
+
+ <figure>
+  <center>
+  <img src="images/data_frame.png" alt="A data frame can be seen as an Excel tabular sheet: Lines are observations and columns are variables." style="height:600px">
+  </center>
+</figure>
+
+::: {.callout-note}
+A data frame can be seen as a matrix with the difference that **columns (variables) can be of different types** (numerics, dates, characters, etc.).
+:::
+
+## Importing data into data frames
+
+- Most of the time, this is the data structure that will be created when importing data in R.
+
+- There are many functions to import data in R.
+
+| **File format**                    | **Function**   | **Package** |
+| ---------------------------------- | -------------- | ----------- |
+| Comma separated values (.csv)      | `read_csv()`   | readr       |
+| Other text files (.txt, .dat, ...) | `read_delim()` | readr       |
+| Excel (.xls, .xlsx)                | `read_excel()` | readxl      |
+| Stata                              | `read_stata()` | haven       |
+| SPSS                               | `read_spss()`  | haven       |
+| SAS                                | `read_sas()`   | haven       |
+| Matlab file (.mat)                 | `readMat()`    | R.matlab    |
+
+## Reading files
+
+Functions to read files in {{< fa brands r-project >}} often have the same schema:
+
+. . .
+
+::: {.r-fit-text}
+::: {.code}
+
+read\_\*([\"file\"]{.fragment .highlight-orange}, [\<options\>]{.fragment .highlight-pastel})
+
+:::
+:::
+
+<br>
+
+. . .
+
+Examples of [\<options\>]{.background-pastel .code} can be:
+
+- A single character used to separate fields within a record: Ex.: `","`, `";"`, `"\t"`.
+- The names of the columns to read.
+- The number of rows to read.
+
+## The `nycflights13` datasets
+
+Today's data comes from the `nycflights13` R package.
+
+```{r}
+#| eval: false
+install.packages("nycflights13")
+```
+
+::: {.incremental}
+
+- This package contains information about all flights that departed from New York airports (i.e., **EWR**, **JFK** and **LGA**) in 2013.
+
+- Will use a reduced version of the data set for the purpose of this workshop.
+
+- Two data frames are available:
+
+  - `airports`: Information about each airport (name, geographical coordinates)
+  - `flights`: Information about each flight (departure time, origin and destination airports)
+
+:::
+
+## Importing data
+
+```{r}
+library(readxl) # Not included in tidyverse
+
+airports <- read_excel("data/airports.xlsx")
+airports
+```
+
+## Importing data
+
+```{r}
+flights <- read_csv("data/flights.csv")
+flights
+```
+
+# Manipulating data in R {background-color="#2C404A"}
+
+## Data manipulation
+
+There are at least two characteristics that a good data manipulation software should have:
+
+. . .
+
+1. **speed**: results are returned in a reasonable time
+
+. . .
+
+2. **elegance**: easy to use and to understand what the code is doing
+
+. . .
+
+> The **tidyverse** is an opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures.
+
+## The tidyverse
+
+The tidyverse is a **meta package** that provides a collection of tools (across different packages) that are designed for data science.
+
+<center>
+<img src="https://tidyverse.tidyverse.org/logo.png" width="400"/>
+</center>
+
+<center>
+<img src="https://dplyr.tidyverse.org/logo.png" width="200"/> <img src="https://tidyr.tidyverse.org/logo.png" width="200"/> <img src="https://readr.tidyverse.org/logo.png" width="200"/> <img src="https://readxl.tidyverse.org/logo.png" width="200"/> <img src="https://ggplot2.tidyverse.org/logo.png" width="200"/><img src="https://stringr.tidyverse.org/logo.png" width="200"/><img src="https://lubridate.tidyverse.org/logo.png" width="200"/><img src="https://purrr.tidyverse.org/logo.png" width="200"/><img src="https://forcats.tidyverse.org/logo.png" width="200"/>
+</center>
+
+## The tidyverse
+
+The package is not included in the base installation of R.
+
+```{r}
+#| eval: false
+# Install the tidyverse packages
+install.packages("tidyverse")
+```
+
+```{r}
+#| eval: false
+# Load all the packages included in tidyverse
+library(tidyverse)
+```
+
+<center>
+<img src="https://tidyverse.tidyverse.org/logo.png" width="400"/>
+</center>
+
+# Data manipulation with {dplyr} and {tidyr} {background-color="#2C404A"}
+
+## Tidyverse
+
+A lot of `tidyverse` functions have the same scheme: **the first argument is a data frame**:
+
+::: {.r-fit-text}
+
+::: {.code}
+
+function([\<dataframe\>]{.fragment .highlight-orange}, [\<expression\>]{.fragment .highlight-pastel})
+
+:::
+:::
+
+. . .
+
+| **Function**         | **Definition**                                                                                                         |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `filter(df, ...)`    | Select a subset of the rows of a data frame.                                                                           |
+| `arrange(df, ...)`   | Reorder rows of a data frame.                                                                                          |
+| `select(df, ...)`    | Select columns of a data frame.                                                                                        |
+| `mutate(df, ...)`    | Add or modify columns in a data frame.                                                                                 |
+| `summarise(df, ...)` | Summarize a data frame into a single row. This function is very helpful in combination with the `group_by()` function. |
+| `group_by(df, ...)`  | Group a data frame based on the specified columns.                                                                     |
+| `*_join(df, ...)`    | Join/merge two data frames.                                                                                            |
+
+: Useful functions in `dplyr` / `tidyr` {tbl-colwidths="[25,75]"}
+
+## The `filter()` function
+
+- The `filter()` allows you to select a subset of the rows of a data frame.
+
+- The first argument is the name of the data frame, and the second and subsequent are filtering expressions evaluated in the context of that data frame.
+
+<!-- <figure>
+  <center>
+  <img src="images/functions/filter.png" alt="The filter function" style="width:65%">
+  </center>
+</figure>  -->
+
+::: fragment
+
+::: {.r-fit-text}
+
+::: {.code}
+
+filter([\<dataframe\>]{.fragment .highlight-orange}, [\<logical expression\>]{.fragment .highlight-pastel})
+
+:::
+:::
+
+:::
+
+## The `filter()` function
+
+Example 1: [select all flights with a tail number equal to "**N14228**".]{.text-outline}
+
+```{r}
+filter(flights, dest == "ORD")
+```
