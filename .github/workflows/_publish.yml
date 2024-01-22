@@ -26,11 +26,6 @@ jobs:
         with:
           r-version: "4.3.2"
 
-      - name: Render sample deployment RevealJS presentation template
-        uses: quarto-dev/quarto-actions/render@v2
-        with:
-          path: "index.qmd"
-
       - name: Render and Publish
         uses: quarto-dev/quarto-actions/publish@v2
         with:
