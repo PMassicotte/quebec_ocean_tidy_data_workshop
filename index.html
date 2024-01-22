@@ -510,6 +510,52 @@ Artwork by Allison Horst
 </div>
 </section>
 <section>
+<section id="manipulating-data-in-r" class="title-slide slide level1 center" data-background-color="#2C404A">
+<h1>Manipulating data in R</h1>
+
+</section>
+<section id="data-manipulation" class="slide level2">
+<h2>Data manipulation</h2>
+<p>There are at least two characteristics that a good data manipulation software should have:</p>
+<div class="fragment">
+<ol type="1">
+<li><strong>speed</strong>: results are returned in a reasonable time</li>
+</ol>
+</div>
+<div class="fragment">
+<ol start="2" type="1">
+<li><strong>elegance</strong>: easy to use and to understand what the code is doing</li>
+</ol>
+</div>
+<div class="fragment">
+<blockquote>
+<p>The <strong>tidyverse</strong> is an opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures.</p>
+</blockquote>
+</div>
+</section>
+<section id="the-tidyverse" class="slide level2">
+<h2>The tidyverse</h2>
+<p>The tidyverse is a <strong>meta package</strong> that provides a collection of tools (across different packages) that are designed for data science.</p>
+<center>
+<img src="https://tidyverse.tidyverse.org/logo.png" width="400">
+</center>
+<center>
+<img src="https://dplyr.tidyverse.org/logo.png" width="200"> <img src="https://tidyr.tidyverse.org/logo.png" width="200"> <img src="https://readr.tidyverse.org/logo.png" width="200"> <img src="https://readxl.tidyverse.org/logo.png" width="200"> <img src="https://ggplot2.tidyverse.org/logo.png" width="200"><img src="https://stringr.tidyverse.org/logo.png" width="200"><img src="https://lubridate.tidyverse.org/logo.png" width="200"><img src="https://purrr.tidyverse.org/logo.png" width="200"><img src="https://forcats.tidyverse.org/logo.png" width="200">
+</center>
+</section>
+<section id="the-tidyverse-1" class="slide level2">
+<h2>The tidyverse</h2>
+<p>The package is not included in the base installation of R.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="co"># Install the tidyverse packages</span></span>
+<span id="cb1-2"><a href=""></a><span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a><span class="co"># Load all the packages included in tidyverse</span></span>
+<span id="cb2-2"><a href=""></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section></section>
+<section>
 <section id="importing-data" class="title-slide slide level1 center" data-background-color="#2C404A">
 <h1>Importing data</h1>
 
@@ -629,7 +675,7 @@ Artwork by Allison Horst
 <h2>The <code>nycflights13</code> datasets</h2>
 <p>Today’s data comes from the <code>nycflights13</code> R package.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="fu">install.packages</span>(<span class="st">"nycflights13"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a><span class="fu">install.packages</span>(<span class="st">"nycflights13"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div>
 <ul>
@@ -646,107 +692,56 @@ Artwork by Allison Horst
 <section id="importing-data-1" class="slide level2">
 <h2>Importing data</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a><span class="fu">library</span>(readxl) <span class="co"># Not included in tidyverse</span></span>
-<span id="cb2-2"><a href=""></a></span>
-<span id="cb2-3"><a href=""></a>airports <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/airports.xlsx"</span>)</span>
-<span id="cb2-4"><a href=""></a>airports</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a>airports <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"http://tinyurl.com/nyc13airports"</span>)</span>
+<span id="cb4-2"><a href=""></a>airports</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 15 × 4
-   faa   name                           lat      lon
-   &lt;chr&gt; &lt;chr&gt;                        &lt;dbl&gt;    &lt;dbl&gt;
- 1 SVH   Regional Airport            35.765  -80.954
- 2 RNM   Ramona Airport              33.039 -116.92 
- 3 NNL   Nondalton Airport           59.967 -154.85 
- 4 HUF   Terre Haute Intl Hulman Fld 39.451  -87.308
- 5 VCT   Victoria Regional Airport   28.853  -96.918
- 6 AVP   Wilkes Barre Scranton Intl  41.338  -75.723
- 7 LAF   Purude University Airport   40.412  -86.937
- 8 PHK   Pahokee Airport             26.789  -80.692
- 9 KVC   King Cove Airport           55.116 -162.27 
-10 LIH   Lihue                       21.976 -159.34 
-11 MCN   Middle Georgia Rgnl         32.693  -83.649
-12 BMI   Central Illinois Rgnl       40.477  -88.916
-13 RAC   John H. Batten Airport      42.760  -87.815
-14 ANP   Lee Airport                 38.943  -76.568
-15 KGX   Grayling Airport            62.894 -160.06 </code></pre>
+   faa   name                                 lat      lon
+   &lt;chr&gt; &lt;chr&gt;                              &lt;dbl&gt;    &lt;dbl&gt;
+ 1 CVG   Cincinnati Northern Kentucky Intl 39.049  -84.668
+ 2 DFW   Dallas Fort Worth Intl            32.897  -97.038
+ 3 FLL   Fort Lauderdale Hollywood Intl    26.073  -80.153
+ 4 IAD   Washington Dulles Intl            38.945  -77.456
+ 5 LAX   Los Angeles Intl                  33.943 -118.41 
+ 6 MIA   Miami Intl                        25.793  -80.291
+ 7 OMA   Eppley Afld                       41.303  -95.894
+ 8 SAN   San Diego Intl                    32.734 -117.19 
+ 9 XNA   NW Arkansas Regional              36.282  -94.307
+10 SLN   Salina Municipal Airport          38.791  -97.652
+11 MCF   Macdill Afb                       27.849  -82.521
+12 X59   Valkaria Municipal                27.961  -80.558
+13 HUS   Hughes Airport                    66.039 -154.26 
+14 MCC   Mc Clellan Afld                   38.668 -121.40 
+15 DVL   Devils Lake Regional Airport      48.114  -98.909</code></pre>
 </div>
 </div>
 </section>
 <section id="importing-data-2" class="slide level2">
 <h2>Importing data</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a>flights <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/flights.csv"</span>)</span>
-<span id="cb4-2"><a href=""></a>flights</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a>flights <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"http://tinyurl.com/nyc13flights"</span>)</span>
+<span id="cb6-2"><a href=""></a>flights</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 15 × 8
-    year month   day  hour minute flight origin dest 
-   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;
- 1  2013     2    10     8     50     59 JFK    TPA  
- 2  2013     2    25    20      0    487 EWR    MIA  
- 3  2013     8    26    14     55   1164 JFK    BOS  
- 4  2013     5     5     7      0    763 JFK    LAX  
- 5  2013    12     8    20      0    695 LGA    ORD  
- 6  2013    12    12    20     25    436 JFK    DEN  
- 7  2013    11    19    13     10    426 EWR    MIA  
- 8  2013     8    31     8     25   1838 JFK    BOS  
- 9  2013     5    23     8     50   1357 JFK    SJU  
-10  2013     1    15     8      7    219 JFK    CLT  
-11  2013     4    26    19      0    947 LGA    ATL  
-12  2013     9     8     8     10   4625 EWR    BWI  
-13  2013     9    10     8      0    544 LGA    ORD  
-14  2013     1    30    15     10   4447 LGA    RDU  
-15  2013     5     7    16     32   4702 EWR    GSO  </code></pre>
+<pre><code># A tibble: 15 × 9
+    year month   day  hour minute flight origin dest  distance
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt;
+ 1  2013     8     5    14      6   3816 EWR    CVG        569
+ 2  2013    12    26     7      5    331 LGA    ORD        733
+ 3  2013    12    15    18     30    438 JFK    SAN       2446
+ 4  2013     1    11    14     35   3750 LGA    IAD        229
+ 5  2013    11    11    14     29    301 JFK    FLL       1069
+ 6  2013     7    23    12      0   3572 LGA    CLE        419
+ 7  2013     2     1    17     58   1172 EWR    ORD        719
+ 8  2013     7     9     7     15    399 JFK    LAX       2475
+ 9  2013     8    25    18     40   4131 EWR    RIC        277
+10  2013    10    20    17     30   5298 LGA    OMA       1148
+11  2013     9     6    21     40   3660 LGA    BNA        764
+12  2013    12    20    11     40    388 LGA    MIA       1096
+13  2013     4    18    14     55    759 LGA    DFW       1389
+14  2013     7     1     6     30   1402 JFK    LAX       2475
+15  2013     8    21     7     10   3547 LGA    XNA       1147</code></pre>
 </div>
 </div>
-</section></section>
-<section>
-<section id="manipulating-data-in-r" class="title-slide slide level1 center" data-background-color="#2C404A">
-<h1>Manipulating data in R</h1>
-
-</section>
-<section id="data-manipulation" class="slide level2">
-<h2>Data manipulation</h2>
-<p>There are at least two characteristics that a good data manipulation software should have:</p>
-<div class="fragment">
-<ol type="1">
-<li><strong>speed</strong>: results are returned in a reasonable time</li>
-</ol>
-</div>
-<div class="fragment">
-<ol start="2" type="1">
-<li><strong>elegance</strong>: easy to use and to understand what the code is doing</li>
-</ol>
-</div>
-<div class="fragment">
-<blockquote>
-<p>The <strong>tidyverse</strong> is an opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures.</p>
-</blockquote>
-</div>
-</section>
-<section id="the-tidyverse" class="slide level2">
-<h2>The tidyverse</h2>
-<p>The tidyverse is a <strong>meta package</strong> that provides a collection of tools (across different packages) that are designed for data science.</p>
-<center>
-<img src="https://tidyverse.tidyverse.org/logo.png" width="400">
-</center>
-<center>
-<img src="https://dplyr.tidyverse.org/logo.png" width="200"> <img src="https://tidyr.tidyverse.org/logo.png" width="200"> <img src="https://readr.tidyverse.org/logo.png" width="200"> <img src="https://readxl.tidyverse.org/logo.png" width="200"> <img src="https://ggplot2.tidyverse.org/logo.png" width="200"><img src="https://stringr.tidyverse.org/logo.png" width="200"><img src="https://lubridate.tidyverse.org/logo.png" width="200"><img src="https://purrr.tidyverse.org/logo.png" width="200"><img src="https://forcats.tidyverse.org/logo.png" width="200">
-</center>
-</section>
-<section id="the-tidyverse-1" class="slide level2">
-<h2>The tidyverse</h2>
-<p>The package is not included in the base installation of R.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a><span class="co"># Install the tidyverse packages</span></span>
-<span id="cb6-2"><a href=""></a><span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a><span class="co"># Load all the packages included in tidyverse</span></span>
-<span id="cb7-2"><a href=""></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<center>
-<img src="https://tidyverse.tidyverse.org/logo.png" width="400">
-</center>
 </section></section>
 <section>
 <section id="data-manipulation-with-dplyr-and-tidyr" class="title-slide slide level1 center" data-background-color="#2C404A">
@@ -828,24 +823,650 @@ Artwork by Allison Horst
 </section>
 <section id="the-filter-function-1" class="slide level2">
 <h2>The <code>filter()</code> function</h2>
-<p>Example 1: <span class="text-outline">select all flights with a tail number equal to “<strong>N14228</strong>”.</span></p>
+<p>Example 1: <span class="text-outline">select all flights going to the <strong>ORD</strong> airport</span></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a><span class="fu">filter</span>(flights, dest <span class="sc">==</span> <span class="st">"ORD"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 17,283 × 8
-    year month   day  hour minute flight origin dest 
-   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;
- 1  2013     1     1     5     58   1696 EWR    ORD  
- 2  2013     1     1     6      0    301 LGA    ORD  
- 3  2013     1     1     6      0   3768 EWR    ORD  
- 4  2013     1     1     6     30    303 LGA    ORD  
- 5  2013     1     1     7      0    305 LGA    ORD  
- 6  2013     1     1     7      0   1092 LGA    ORD  
- 7  2013     1     1     7     13    544 EWR    ORD  
- 8  2013     1     1     7     45    309 LGA    ORD  
- 9  2013     1     1     7     10   3737 EWR    ORD  
-10  2013     1     1     8     30    905 JFK    ORD  
-# ℹ 17,273 more rows</code></pre>
+<pre><code># A tibble: 2 × 9
+   year month   day  hour minute flight origin dest  distance
+  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt;
+1  2013    12    26     7      5    331 LGA    ORD        733
+2  2013     2     1    17     58   1172 EWR    ORD        719</code></pre>
+</div>
+</div>
+</section>
+<section id="the-filter-function-2" class="slide level2">
+<h2>The <code>filter()</code> function</h2>
+<p>Example 2: <span class="text-outline">select all flights that departed after 3 PM</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a><span class="fu">filter</span>(flights, hour <span class="sc">&gt;</span> <span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 9
+   year month   day  hour minute flight origin dest  distance
+  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt;
+1  2013    12    15    18     30    438 JFK    SAN       2446
+2  2013     2     1    17     58   1172 EWR    ORD        719
+3  2013     8    25    18     40   4131 EWR    RIC        277
+4  2013    10    20    17     30   5298 LGA    OMA       1148
+5  2013     9     6    21     40   3660 LGA    BNA        764</code></pre>
+</div>
+</div>
+</section>
+<section id="the-select-function" class="slide level2">
+<h2>The <code>select()</code> function</h2>
+<ul>
+<li><p><code>select()</code> is used to extract column(s) from a data frame.</p></li>
+<li><p>Useful when you want to perform data analysis on specific column(s) and not the complete dataset.</p></li>
+</ul>
+<div class="fragment">
+<div class="r-fit-text">
+<div class="code">
+<p>select(<span class="fragment highlight-orange">&lt;dataframe&gt;</span>, <span class="fragment highlight-pastel">&lt;column(s)&gt;</span>)</p>
+</div>
+</div>
+</div>
+</section>
+<section id="the-select-function-1" class="slide level2">
+<h2>The <code>select()</code> function</h2>
+<p>Example 1: <span class="text-outline">select “<strong>faa</strong>” and “<strong>name</strong>” columns from the <code>airports</code> data frame.</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a><span class="fu">select</span>(airports, faa, name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 15 × 2
+   faa   name                             
+   &lt;chr&gt; &lt;chr&gt;                            
+ 1 CVG   Cincinnati Northern Kentucky Intl
+ 2 DFW   Dallas Fort Worth Intl           
+ 3 FLL   Fort Lauderdale Hollywood Intl   
+ 4 IAD   Washington Dulles Intl           
+ 5 LAX   Los Angeles Intl                 
+ 6 MIA   Miami Intl                       
+ 7 OMA   Eppley Afld                      
+ 8 SAN   San Diego Intl                   
+ 9 XNA   NW Arkansas Regional             
+10 SLN   Salina Municipal Airport         
+11 MCF   Macdill Afb                      
+12 X59   Valkaria Municipal               
+13 HUS   Hughes Airport                   
+14 MCC   Mc Clellan Afld                  
+15 DVL   Devils Lake Regional Airport     </code></pre>
+</div>
+</div>
+</section>
+<section id="the-select-function-2" class="slide level2">
+<h2>The <code>select()</code> function</h2>
+<p>You can also use <code>select()</code> to remove columns with the <code>-</code> operator.</p>
+<p>Example 2: <span class="text-outline">select all columns from <code>airports</code> except “<strong>faa</strong>” and “<strong>name</strong>”.</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href=""></a><span class="fu">select</span>(airports, <span class="sc">-</span>faa, <span class="sc">-</span>name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 15 × 2
+      lat      lon
+    &lt;dbl&gt;    &lt;dbl&gt;
+ 1 39.049  -84.668
+ 2 32.897  -97.038
+ 3 26.073  -80.153
+ 4 38.945  -77.456
+ 5 33.943 -118.41 
+ 6 25.793  -80.291
+ 7 41.303  -95.894
+ 8 32.734 -117.19 
+ 9 36.282  -94.307
+10 38.791  -97.652
+11 27.849  -82.521
+12 27.961  -80.558
+13 66.039 -154.26 
+14 38.668 -121.40 
+15 48.114  -98.909</code></pre>
+</div>
+</div>
+</section>
+<section id="the-select-function-3" class="slide level2">
+<h2>The <code>select()</code> function</h2>
+<p>It is also possible to select columns using <strong>helper functions</strong>.</p>
+<p>Example 3: <span class="text-outline">select “<strong>year</strong>”, and all columns that start with “<strong>dep_</strong>” from <code>flights</code>.</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href=""></a><span class="fu">select</span>(flights, year, <span class="fu">starts_with</span>(<span class="st">"m"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 15 × 3
+    year month minute
+   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+ 1  2013     8      6
+ 2  2013    12      5
+ 3  2013    12     30
+ 4  2013     1     35
+ 5  2013    11     29
+ 6  2013     7      0
+ 7  2013     2     58
+ 8  2013     7     15
+ 9  2013     8     40
+10  2013    10     30
+11  2013     9     40
+12  2013    12     40
+13  2013     4     55
+14  2013     7     30
+15  2013     8     10</code></pre>
+</div>
+</div>
+</section>
+<section id="the-mutate-function" class="slide level2">
+<h2>The <code>mutate()</code> function</h2>
+<ul>
+<li><p>The <code>mutate()</code> function is used to add or modify existing column(s) inside a data frame.</p></li>
+<li><p>The function takes a data frame, and one or more expressions that add/modify columns.</p></li>
+</ul>
+<div class="fragment">
+<div class="r-fit-text">
+<div class="code">
+<p>mutate(<span class="fragment highlight-orange">&lt;dataframe&gt;</span>, <span class="fragment highlight-pastel">&lt;expression&gt;</span>)</p>
+</div>
+</div>
+</div>
+</section>
+<section id="the-mutate-function-1" class="slide level2">
+<h2>The <code>mutate()</code> function</h2>
+<p>Example 1:</p>
+<p><span class="text-outline r-fit-text">add a new column named <code>distance_km</code> which converts the <code>distance</code> column, which is the flight distance in miles, into km.</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18" data-code-line-numbers="1-5|2|3|4|1-5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href=""></a><span class="fu">mutate</span>(</span>
+<span id="cb18-2"><a href=""></a>  flights,</span>
+<span id="cb18-3"><a href=""></a>  <span class="at">distance_km =</span> distance <span class="sc">/</span> <span class="fl">0.62137</span></span>
+<span id="cb18-4"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 15 × 10
+    year month   day  hour minute flight origin dest  distance distance_km
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt;       &lt;dbl&gt;
+ 1  2013     8     5    14      6   3816 EWR    CVG        569      915.72
+ 2  2013    12    26     7      5    331 LGA    ORD        733     1179.7 
+ 3  2013    12    15    18     30    438 JFK    SAN       2446     3936.5 
+ 4  2013     1    11    14     35   3750 LGA    IAD        229      368.54
+ 5  2013    11    11    14     29    301 JFK    FLL       1069     1720.4 
+ 6  2013     7    23    12      0   3572 LGA    CLE        419      674.32
+ 7  2013     2     1    17     58   1172 EWR    ORD        719     1157.1 
+ 8  2013     7     9     7     15    399 JFK    LAX       2475     3983.1 
+ 9  2013     8    25    18     40   4131 EWR    RIC        277      445.79
+10  2013    10    20    17     30   5298 LGA    OMA       1148     1847.5 
+11  2013     9     6    21     40   3660 LGA    BNA        764     1229.5 
+12  2013    12    20    11     40    388 LGA    MIA       1096     1763.8 
+13  2013     4    18    14     55    759 LGA    DFW       1389     2235.4 
+14  2013     7     1     6     30   1402 JFK    LAX       2475     3983.1 
+15  2013     8    21     7     10   3547 LGA    XNA       1147     1845.9 </code></pre>
+</div>
+</div>
+</section>
+<section id="the-mutate-function-2" class="slide level2">
+<h2>The <code>mutate()</code> function</h2>
+<p>It is also possible to add many new variables in a single operation.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20" data-code-line-numbers="3-4|1-6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href=""></a><span class="fu">mutate</span>(</span>
+<span id="cb20-2"><a href=""></a>  flights,</span>
+<span id="cb20-3"><a href=""></a>  <span class="at">distance_km =</span> distance <span class="sc">/</span> <span class="fl">0.62137</span>,</span>
+<span id="cb20-4"><a href=""></a>  <span class="at">distance_knot =</span> distance <span class="sc">/</span> <span class="fl">1.15078</span></span>
+<span id="cb20-5"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 15 × 11
+    year month   day  hour minute flight origin dest  distance distance_km
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt;       &lt;dbl&gt;
+ 1  2013     8     5    14      6   3816 EWR    CVG        569      915.72
+ 2  2013    12    26     7      5    331 LGA    ORD        733     1179.7 
+ 3  2013    12    15    18     30    438 JFK    SAN       2446     3936.5 
+ 4  2013     1    11    14     35   3750 LGA    IAD        229      368.54
+ 5  2013    11    11    14     29    301 JFK    FLL       1069     1720.4 
+ 6  2013     7    23    12      0   3572 LGA    CLE        419      674.32
+ 7  2013     2     1    17     58   1172 EWR    ORD        719     1157.1 
+ 8  2013     7     9     7     15    399 JFK    LAX       2475     3983.1 
+ 9  2013     8    25    18     40   4131 EWR    RIC        277      445.79
+10  2013    10    20    17     30   5298 LGA    OMA       1148     1847.5 
+11  2013     9     6    21     40   3660 LGA    BNA        764     1229.5 
+12  2013    12    20    11     40    388 LGA    MIA       1096     1763.8 
+13  2013     4    18    14     55    759 LGA    DFW       1389     2235.4 
+14  2013     7     1     6     30   1402 JFK    LAX       2475     3983.1 
+15  2013     8    21     7     10   3547 LGA    XNA       1147     1845.9 
+# ℹ 1 more variable: distance_knot &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="the-mutate-function-3" class="slide level2">
+<h2>The <code>mutate()</code> function</h2>
+<p>Let’s create a departure time column based on the <code>year</code>, <code>month</code>, <code>day</code>, <code>hour</code> and <code>minute</code> columns, using the <code>make_datetime()</code> function from the <code>lubridate</code> package.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href=""></a><span class="fu">mutate</span>(flights, <span class="at">departure_time =</span> <span class="fu">make_datetime</span>(year, month, day, hour, minute))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 15 × 10
+    year month   day  hour minute flight origin dest  distance departure_time     
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt; &lt;dttm&gt;             
+ 1  2013     8     5    14      6   3816 EWR    CVG        569 2013-08-05 14:06:00
+ 2  2013    12    26     7      5    331 LGA    ORD        733 2013-12-26 07:05:00
+ 3  2013    12    15    18     30    438 JFK    SAN       2446 2013-12-15 18:30:00
+ 4  2013     1    11    14     35   3750 LGA    IAD        229 2013-01-11 14:35:00
+ 5  2013    11    11    14     29    301 JFK    FLL       1069 2013-11-11 14:29:00
+ 6  2013     7    23    12      0   3572 LGA    CLE        419 2013-07-23 12:00:00
+ 7  2013     2     1    17     58   1172 EWR    ORD        719 2013-02-01 17:58:00
+ 8  2013     7     9     7     15    399 JFK    LAX       2475 2013-07-09 07:15:00
+ 9  2013     8    25    18     40   4131 EWR    RIC        277 2013-08-25 18:40:00
+10  2013    10    20    17     30   5298 LGA    OMA       1148 2013-10-20 17:30:00
+11  2013     9     6    21     40   3660 LGA    BNA        764 2013-09-06 21:40:00
+12  2013    12    20    11     40    388 LGA    MIA       1096 2013-12-20 11:40:00
+13  2013     4    18    14     55    759 LGA    DFW       1389 2013-04-18 14:55:00
+14  2013     7     1     6     30   1402 JFK    LAX       2475 2013-07-01 06:30:00
+15  2013     8    21     7     10   3547 LGA    XNA       1147 2013-08-21 07:10:00</code></pre>
+</div>
+</div>
+</section>
+<section id="the-summarise-function" class="slide level2">
+<h2>The <code>summarise()</code> function</h2>
+<ul>
+<li><p>The <code>summarise()</code> function allows summarising columns from a data frame.</p></li>
+<li><p>Compress a data frame into single values (i.e.&nbsp;one row).</p>
+<ul>
+<li>Hence, you have to provide a function that will be used to calculate a certain value.</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<div class="r-fit-text">
+<div class="code">
+<p>summarise(<span class="fragment highlight-orange">&lt;dataframe&gt;</span>, <span class="fragment highlight-pastel">&lt;expression&gt;</span>)</p>
+</div>
+</div>
+</div>
+</section>
+<section id="the-summarise-function-1" class="slide level2">
+<h2>The <code>summarise()</code> function</h2>
+<p>Example 1: <span class="text-outline">Calculate the average <code>distance</code> column</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24" data-code-line-numbers="1-4|3|1-4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href=""></a><span class="fu">summarise</span>(</span>
+<span id="cb24-2"><a href=""></a>  flights,</span>
+<span id="cb24-3"><a href=""></a>  <span class="at">average_distance =</span> <span class="fu">mean</span>(distance)</span>
+<span id="cb24-4"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+  average_distance
+             &lt;dbl&gt;
+1           1130.3</code></pre>
+</div>
+</div>
+</section>
+<section id="the-summarise-function-2" class="slide level2">
+<h2>The <code>summarise()</code> function</h2>
+<p>It can be useful to know how many observations (rows) were used. This can be calculated using the <code>n()</code> function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26" data-code-line-numbers="4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href=""></a><span class="fu">summarise</span>(</span>
+<span id="cb26-2"><a href=""></a>  flights,</span>
+<span id="cb26-3"><a href=""></a>  <span class="at">average_distance =</span> <span class="fu">mean</span>(distance),</span>
+<span id="cb26-4"><a href=""></a>  <span class="at">n =</span> <span class="fu">n</span>()</span>
+<span id="cb26-5"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+  average_distance     n
+             &lt;dbl&gt; &lt;int&gt;
+1           1130.3    15</code></pre>
+</div>
+</div>
+</section>
+<section id="the-summarise-function-3" class="slide level2">
+<h2>The <code>summarise()</code> function</h2>
+<p>It is also possible to use a summarising function <strong>by group</strong> using the <code>by</code> argument.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28" data-code-line-numbers="5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href=""></a><span class="fu">summarise</span>(</span>
+<span id="cb28-2"><a href=""></a>  flights,</span>
+<span id="cb28-3"><a href=""></a>  <span class="at">average_distance =</span> <span class="fu">mean</span>(distance),</span>
+<span id="cb28-4"><a href=""></a>  <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb28-5"><a href=""></a>  <span class="at">.by =</span> origin</span>
+<span id="cb28-6"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  origin average_distance     n
+  &lt;chr&gt;             &lt;dbl&gt; &lt;int&gt;
+1 EWR              521.67     3
+2 LGA              865.62     8
+3 JFK             2116.2      4</code></pre>
+</div>
+</div>
+</section></section>
+<section>
+<section id="joining-tables" class="title-slide slide level1 center" data-background-color="#2C404A">
+<h1>Joining tables</h1>
+
+</section>
+<section id="joining-tables-1" class="slide level2">
+<h2>Joining tables</h2>
+<ul>
+<li><p>Data are rarely stored in a single data frame or a single file.</p></li>
+<li><p>Good database practices recommend having similar data in separate tables.</p></li>
+<li><p>Joins are used to <strong>merge data frame</strong> together.</p></li>
+</ul>
+<div class="fragment">
+<div class="r-fit-text">
+<div class="code">
+<p>*_join(<span class="fragment highlight-orange">&lt;dataframe&gt;</span>, <span class="fragment highlight-pastel">&lt;dataframe&gt;</span>)</p>
+</div>
+</div>
+</div>
+</section>
+<section id="understanding-joins" class="slide level2">
+<h2>Understanding joins</h2>
+<figure>
+<center>
+<img src="images/join_types.svg" alt="Ven diagrams showing the main type of SQL joins" style="width:65%">
+<figcaption>
+Types of equality and filtering joins
+</figcaption>
+</center>
+</figure>
+</section>
+<section id="joining-airports-and-flights" class="slide level2">
+<h2>Joining airports and flights</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href=""></a><span class="fu">head</span>(flights)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 9
+   year month   day  hour minute flight origin dest  distance
+  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt;
+1  2013     8     5    14      6   3816 EWR    CVG        569
+2  2013    12    26     7      5    331 LGA    ORD        733
+3  2013    12    15    18     30    438 JFK    SAN       2446
+4  2013     1    11    14     35   3750 LGA    IAD        229
+5  2013    11    11    14     29    301 JFK    FLL       1069
+6  2013     7    23    12      0   3572 LGA    CLE        419</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href=""></a><span class="fu">head</span>(airports)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+  faa   name                                 lat      lon
+  &lt;chr&gt; &lt;chr&gt;                              &lt;dbl&gt;    &lt;dbl&gt;
+1 CVG   Cincinnati Northern Kentucky Intl 39.049  -84.668
+2 DFW   Dallas Fort Worth Intl            32.897  -97.038
+3 FLL   Fort Lauderdale Hollywood Intl    26.073  -80.153
+4 IAD   Washington Dulles Intl            38.945  -77.456
+5 LAX   Los Angeles Intl                  33.943 -118.41 
+6 MIA   Miami Intl                        25.793  -80.291</code></pre>
+</div>
+</div>
+</section>
+<section id="joining-airports-and-flights-1" class="slide level2">
+<h2>Joining airports and flights</h2>
+<p>If we try to left join the <code>flights</code> and <code>airports</code> data frames, we get an error because there is no common column between the two data frames.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href=""></a><span class="fu">left_join</span>(flights, airports)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in `left_join()`:
+! `by` must be supplied when `x` and `y` have no common variables.
+ℹ Use `cross_join()` to perform a cross-join.</code></pre>
+</div>
+</div>
+</section>
+<section id="joining-airports-and-flights-2" class="slide level2">
+<h2>Joining airports and flights</h2>
+<p>We can use the <code>dest</code> column from the <code>flights</code> data frame and the <code>faa</code> column from the <code>airports</code> data frame.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href=""></a><span class="fu">left_join</span>(flights, airports, <span class="at">by =</span> <span class="fu">join_by</span>(dest <span class="sc">==</span> faa))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 15 × 12
+    year month   day  hour minute flight origin dest  distance name          lat
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt;
+ 1  2013     8     5    14      6   3816 EWR    CVG        569 Cincinnat… 39.049
+ 2  2013    12    26     7      5    331 LGA    ORD        733 &lt;NA&gt;       NA    
+ 3  2013    12    15    18     30    438 JFK    SAN       2446 San Diego… 32.734
+ 4  2013     1    11    14     35   3750 LGA    IAD        229 Washingto… 38.945
+ 5  2013    11    11    14     29    301 JFK    FLL       1069 Fort Laud… 26.073
+ 6  2013     7    23    12      0   3572 LGA    CLE        419 &lt;NA&gt;       NA    
+ 7  2013     2     1    17     58   1172 EWR    ORD        719 &lt;NA&gt;       NA    
+ 8  2013     7     9     7     15    399 JFK    LAX       2475 Los Angel… 33.943
+ 9  2013     8    25    18     40   4131 EWR    RIC        277 &lt;NA&gt;       NA    
+10  2013    10    20    17     30   5298 LGA    OMA       1148 Eppley Af… 41.303
+11  2013     9     6    21     40   3660 LGA    BNA        764 &lt;NA&gt;       NA    
+12  2013    12    20    11     40    388 LGA    MIA       1096 Miami Intl 25.793
+13  2013     4    18    14     55    759 LGA    DFW       1389 Dallas Fo… 32.897
+14  2013     7     1     6     30   1402 JFK    LAX       2475 Los Angel… 33.943
+15  2013     8    21     7     10   3547 LGA    XNA       1147 NW Arkans… 36.282
+# ℹ 1 more variable: lon &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="joining-airports-and-flights-3" class="slide level2">
+<h2>Joining airports and flights</h2>
+<p>We can see that some of the <code>dest</code> codes are not present in the <code>airports</code> data frame. Anti-joins can be used to keep only the rows that do not match between the two data frames.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href=""></a><span class="fu">anti_join</span>(flights, airports, <span class="at">by =</span> <span class="fu">join_by</span>(dest <span class="sc">==</span> faa))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 9
+   year month   day  hour minute flight origin dest  distance
+  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt;
+1  2013    12    26     7      5    331 LGA    ORD        733
+2  2013     7    23    12      0   3572 LGA    CLE        419
+3  2013     2     1    17     58   1172 EWR    ORD        719
+4  2013     8    25    18     40   4131 EWR    RIC        277
+5  2013     9     6    21     40   3660 LGA    BNA        764</code></pre>
+</div>
+</div>
+</section>
+<section id="joining-airports-and-flights-4" class="slide level2">
+<h2>Joining airports and flights</h2>
+<p>Filtering joins can be used to keep only the rows that match between the two data frames.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href=""></a><span class="fu">semi_join</span>(flights, airports, <span class="at">by =</span> <span class="fu">join_by</span>(dest <span class="sc">==</span> faa))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 9
+    year month   day  hour minute flight origin dest  distance
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt;
+ 1  2013     8     5    14      6   3816 EWR    CVG        569
+ 2  2013    12    15    18     30    438 JFK    SAN       2446
+ 3  2013     1    11    14     35   3750 LGA    IAD        229
+ 4  2013    11    11    14     29    301 JFK    FLL       1069
+ 5  2013     7     9     7     15    399 JFK    LAX       2475
+ 6  2013    10    20    17     30   5298 LGA    OMA       1148
+ 7  2013    12    20    11     40    388 LGA    MIA       1096
+ 8  2013     4    18    14     55    759 LGA    DFW       1389
+ 9  2013     7     1     6     30   1402 JFK    LAX       2475
+10  2013     8    21     7     10   3547 LGA    XNA       1147</code></pre>
+</div>
+</div>
+</section>
+<section id="joining-airports-and-flights-5" class="slide level2">
+<h2>Joining airports and flights</h2>
+<p>Full joins can be used to keep all rows from both data frames.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href=""></a><span class="fu">full_join</span>(flights, airports, <span class="at">by =</span> <span class="fu">join_by</span>(dest <span class="sc">==</span> faa))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 21 × 12
+    year month   day  hour minute flight origin dest  distance name          lat
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt;
+ 1  2013     8     5    14      6   3816 EWR    CVG        569 Cincinnat… 39.049
+ 2  2013    12    26     7      5    331 LGA    ORD        733 &lt;NA&gt;       NA    
+ 3  2013    12    15    18     30    438 JFK    SAN       2446 San Diego… 32.734
+ 4  2013     1    11    14     35   3750 LGA    IAD        229 Washingto… 38.945
+ 5  2013    11    11    14     29    301 JFK    FLL       1069 Fort Laud… 26.073
+ 6  2013     7    23    12      0   3572 LGA    CLE        419 &lt;NA&gt;       NA    
+ 7  2013     2     1    17     58   1172 EWR    ORD        719 &lt;NA&gt;       NA    
+ 8  2013     7     9     7     15    399 JFK    LAX       2475 Los Angel… 33.943
+ 9  2013     8    25    18     40   4131 EWR    RIC        277 &lt;NA&gt;       NA    
+10  2013    10    20    17     30   5298 LGA    OMA       1148 Eppley Af… 41.303
+# ℹ 11 more rows
+# ℹ 1 more variable: lon &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section></section>
+<section>
+<section id="tidy-data" class="title-slide slide level1 center" data-background-color="#2C404A">
+<h1>Tidy data</h1>
+
+</section>
+<section id="tidy-data-1" class="slide level2">
+<h2>Tidy data</h2>
+<p>In a tidy data set, each row correspond to an <strong>observation</strong> whereas each column is a <strong>variable</strong>.</p>
+<p>Tidying a dataset consists in cleaning and structuring datasets to facilitate analysis.</p>
+</section>
+<section id="what-is-a-messy-dataset" class="slide level2">
+<h2>What is a messy dataset?</h2>
+<p><small> https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html </small></p>
+<p>There are five main common problems that define a messy dataset:</p>
+<ol type="1">
+<li>Column headers are values, not variable names.</li>
+<li>Multiple variables are stored in one column.</li>
+<li>Variables are stored in both rows and columns.</li>
+<li>Multiple types of observational units are stored in the same table.</li>
+<li>A single observational unit is stored in multiple tables.</li>
+</ol>
+</section>
+<section id="column-headers-are-values" class="slide level2">
+<h2>Column headers are values</h2>
+<p>The religion income dataset is an example of a dataset where the column headers are values, not variable names. The table below shows the first 6 rows of the dataset.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href=""></a>relig_income <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"http://tinyurl.com/religionincome"</span>)</span>
+<span id="cb44-2"><a href=""></a><span class="fu">head</span>(relig_income)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 11
+  religion  `&lt;$10k` `$10-20k` `$20-30k` `$30-40k` `$40-50k` `$50-75k` `$75-100k`
+  &lt;chr&gt;       &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;
+1 Agnostic       27        34        60        81        76       137        122
+2 Atheist        12        27        37        52        35        70         73
+3 Buddhist       27        21        30        34        33        58         62
+4 Catholic      418       617       732       670       638      1116        949
+5 Don’t kn…      15        14        15        11        10        35         21
+6 Evangeli…     575       869      1064       982       881      1486        949
+# ℹ 3 more variables: `$100-150k` &lt;dbl&gt;, `&gt;150k` &lt;dbl&gt;,
+#   `Don't know/refused` &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="column-headers-are-values-1" class="slide level2">
+<h2>Column headers are values</h2>
+<p>To fix this, we have to pivot the data frame using the <code>pivot_longer()</code> function. We have to specify the column(s) that will be used as <strong>identifier variables</strong> (i.e.&nbsp;the columns that will not be modified) and the column(s) that will be used as <strong>measured variables</strong> (i.e.&nbsp;the columns that will be modified).</p>
+<div class="fragment">
+<div class="r-fit-text">
+<div class="code">
+<p>pivot_longer(<span class="fragment highlight-orange">&lt;dataframe&gt;</span>, <span class="fragment highlight-pastel">&lt;columns to pivot&gt;</span>)</p>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href=""></a><span class="fu">head</span>(relig_income)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 11
+  religion  `&lt;$10k` `$10-20k` `$20-30k` `$30-40k` `$40-50k` `$50-75k` `$75-100k`
+  &lt;chr&gt;       &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;
+1 Agnostic       27        34        60        81        76       137        122
+2 Atheist        12        27        37        52        35        70         73
+3 Buddhist       27        21        30        34        33        58         62
+4 Catholic      418       617       732       670       638      1116        949
+5 Don’t kn…      15        14        15        11        10        35         21
+6 Evangeli…     575       869      1064       982       881      1486        949
+# ℹ 3 more variables: `$100-150k` &lt;dbl&gt;, `&gt;150k` &lt;dbl&gt;,
+#   `Don't know/refused` &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="column-headers-are-values-2" class="slide level2">
+<h2>Column headers are values</h2>
+<p>We can see that the <code>pivot_longer()</code> function has created two new columns: <code>income</code> and <code>count</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href=""></a><span class="fu">pivot_longer</span>(relig_income, <span class="sc">-</span>religion, <span class="at">names_to =</span> <span class="st">"income"</span>, <span class="at">values_to =</span> <span class="st">"count"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 180 × 3
+   religion income             count
+   &lt;chr&gt;    &lt;chr&gt;              &lt;dbl&gt;
+ 1 Agnostic &lt;$10k                 27
+ 2 Agnostic $10-20k               34
+ 3 Agnostic $20-30k               60
+ 4 Agnostic $30-40k               81
+ 5 Agnostic $40-50k               76
+ 6 Agnostic $50-75k              137
+ 7 Agnostic $75-100k             122
+ 8 Agnostic $100-150k            109
+ 9 Agnostic &gt;150k                 84
+10 Agnostic Don't know/refused    96
+# ℹ 170 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="multiple-variables-are-stored-in-one-column" class="slide level2">
+<h2>Multiple variables are stored in one column</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href=""></a>tb <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"http://tinyurl.com/whotuber"</span>)</span>
+<span id="cb50-2"><a href=""></a><span class="fu">head</span>(tb)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 58
+  country      year sp_m_014 sp_m_1524 sp_m_2534 sp_m_3544 sp_m_4554 sp_m_5564
+  &lt;chr&gt;       &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+1 Afghanistan  1980       NA        NA        NA        NA        NA        NA
+2 Afghanistan  1981       NA        NA        NA        NA        NA        NA
+3 Afghanistan  1982       NA        NA        NA        NA        NA        NA
+4 Afghanistan  1983       NA        NA        NA        NA        NA        NA
+5 Afghanistan  1984       NA        NA        NA        NA        NA        NA
+6 Afghanistan  1985       NA        NA        NA        NA        NA        NA
+# ℹ 50 more variables: sp_m_65 &lt;dbl&gt;, sp_f_014 &lt;dbl&gt;, sp_f_1524 &lt;dbl&gt;,
+#   sp_f_2534 &lt;dbl&gt;, sp_f_3544 &lt;dbl&gt;, sp_f_4554 &lt;dbl&gt;, sp_f_5564 &lt;dbl&gt;,
+#   sp_f_65 &lt;dbl&gt;, sn_m_014 &lt;dbl&gt;, sn_m_1524 &lt;dbl&gt;, sn_m_2534 &lt;dbl&gt;,
+#   sn_m_3544 &lt;dbl&gt;, sn_m_4554 &lt;dbl&gt;, sn_m_5564 &lt;dbl&gt;, sn_m_65 &lt;dbl&gt;,
+#   sn_f_014 &lt;dbl&gt;, sn_f_1524 &lt;dbl&gt;, sn_f_2534 &lt;dbl&gt;, sn_f_3544 &lt;dbl&gt;,
+#   sn_f_4554 &lt;dbl&gt;, sn_f_5564 &lt;dbl&gt;, sn_f_65 &lt;dbl&gt;, ep_m_014 &lt;dbl&gt;,
+#   ep_m_1524 &lt;dbl&gt;, ep_m_2534 &lt;dbl&gt;, ep_m_3544 &lt;dbl&gt;, ep_m_4554 &lt;dbl&gt;,
+#   ep_m_5564 &lt;dbl&gt;, ep_m_65 &lt;dbl&gt;, ep_f_014 &lt;dbl&gt;, ep_f_1524 &lt;dbl&gt;,
+#   ep_f_2534 &lt;dbl&gt;, ep_f_3544 &lt;dbl&gt;, ep_f_4554 &lt;dbl&gt;, ep_f_5564 &lt;dbl&gt;,
+#   ep_f_65 &lt;dbl&gt;, rel_m_014 &lt;dbl&gt;, rel_m_1524 &lt;dbl&gt;, rel_m_2534 &lt;dbl&gt;,
+#   rel_m_3544 &lt;dbl&gt;, rel_m_4554 &lt;dbl&gt;, rel_m_5564 &lt;dbl&gt;, rel_m_65 &lt;dbl&gt;,
+#   rel_f_014 &lt;dbl&gt;, rel_f_1524 &lt;dbl&gt;, rel_f_2534 &lt;dbl&gt;, rel_f_3544 &lt;dbl&gt;,
+#   rel_f_4554 &lt;dbl&gt;, rel_f_5564 &lt;dbl&gt;, rel_f_65 &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="multiple-variables-are-stored-in-one-column-1" class="slide level2">
+<h2>Multiple variables are stored in one column</h2>
+<p>First, we have to pivot the data frame using the <code>pivot_longer()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href=""></a>tb_pivot <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(tb, <span class="sc">!</span><span class="fu">c</span>(country, year), <span class="at">values_to =</span> <span class="st">"count"</span>, <span class="at">names_to =</span> <span class="st">"demo"</span>)</span>
+<span id="cb52-2"><a href=""></a>tb_pivot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 405,440 × 4
+   country      year demo      count
+   &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
+ 1 Afghanistan  1980 sp_m_014     NA
+ 2 Afghanistan  1980 sp_m_1524    NA
+ 3 Afghanistan  1980 sp_m_2534    NA
+ 4 Afghanistan  1980 sp_m_3544    NA
+ 5 Afghanistan  1980 sp_m_4554    NA
+ 6 Afghanistan  1980 sp_m_5564    NA
+ 7 Afghanistan  1980 sp_m_65      NA
+ 8 Afghanistan  1980 sp_f_014     NA
+ 9 Afghanistan  1980 sp_f_1524    NA
+10 Afghanistan  1980 sp_f_2534    NA
+# ℹ 405,430 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="multiple-variables-are-stored-in-one-column-2" class="slide level2">
+<h2>Multiple variables are stored in one column</h2>
+<p>Then, we have to separate the <code>demo</code> column into three columns using the <code>separate()</code> function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href=""></a>tb_tidy <span class="ot">&lt;-</span> <span class="fu">separate_wider_delim</span>(</span>
+<span id="cb54-2"><a href=""></a>  tb_pivot,</span>
+<span id="cb54-3"><a href=""></a>  demo,</span>
+<span id="cb54-4"><a href=""></a>  <span class="at">delim =</span> <span class="st">"_"</span>,</span>
+<span id="cb54-5"><a href=""></a>  <span class="at">names =</span> <span class="fu">c</span>(<span class="st">"case"</span>, <span class="st">"sex"</span>, <span class="st">"age_group"</span>)</span>
+<span id="cb54-6"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="multiple" class="slide level2">
+<h2>Multiple</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href=""></a>tb_tidy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 405,440 × 6
+   country      year case  sex   age_group count
+   &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;     &lt;dbl&gt;
+ 1 Afghanistan  1980 sp    m     014          NA
+ 2 Afghanistan  1980 sp    m     1524         NA
+ 3 Afghanistan  1980 sp    m     2534         NA
+ 4 Afghanistan  1980 sp    m     3544         NA
+ 5 Afghanistan  1980 sp    m     4554         NA
+ 6 Afghanistan  1980 sp    m     5564         NA
+ 7 Afghanistan  1980 sp    m     65           NA
+ 8 Afghanistan  1980 sp    f     014          NA
+ 9 Afghanistan  1980 sp    f     1524         NA
+10 Afghanistan  1980 sp    f     2534         NA
+# ℹ 405,430 more rows</code></pre>
 </div>
 </div>
 <div class="quarto-auto-generated-content">

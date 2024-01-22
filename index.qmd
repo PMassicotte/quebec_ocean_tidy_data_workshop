@@ -30,7 +30,7 @@ knitr:
 
 execute:
   freeze: auto
-  cache: true
+  cache: false
   echo: true
   fig-width: 6
   fig-height: 4
@@ -180,6 +180,52 @@ in
 
 ::::
 
+# Manipulating data in R {background-color="#2C404A"}
+
+## Data manipulation
+
+There are at least two characteristics that a good data manipulation software should have:
+
+. . .
+
+1. **speed**: results are returned in a reasonable time
+
+. . .
+
+2. **elegance**: easy to use and to understand what the code is doing
+
+. . .
+
+> The **tidyverse** is an opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures.
+
+## The tidyverse
+
+The tidyverse is a **meta package** that provides a collection of tools (across different packages) that are designed for data science.
+
+<center>
+<img src="https://tidyverse.tidyverse.org/logo.png" width="400"/>
+</center>
+
+<center>
+<img src="https://dplyr.tidyverse.org/logo.png" width="200"/> <img src="https://tidyr.tidyverse.org/logo.png" width="200"/> <img src="https://readr.tidyverse.org/logo.png" width="200"/> <img src="https://readxl.tidyverse.org/logo.png" width="200"/> <img src="https://ggplot2.tidyverse.org/logo.png" width="200"/><img src="https://stringr.tidyverse.org/logo.png" width="200"/><img src="https://lubridate.tidyverse.org/logo.png" width="200"/><img src="https://purrr.tidyverse.org/logo.png" width="200"/><img src="https://forcats.tidyverse.org/logo.png" width="200"/>
+</center>
+
+## The tidyverse
+
+The package is not included in the base installation of R.
+
+```{r}
+#| eval: false
+# Install the tidyverse packages
+install.packages("tidyverse")
+```
+
+```{r}
+#| eval: false
+# Load all the packages included in tidyverse
+library(tidyverse)
+```
+
 # Importing data {background-color="#2C404A"}
 
 ## Data frames
@@ -275,68 +321,16 @@ install.packages("nycflights13")
 ## Importing data
 
 ```{r}
-library(readxl) # Not included in tidyverse
-
-airports <- read_excel("data/airports.xlsx")
+airports <- read_csv("http://tinyurl.com/nyc13airports")
 airports
 ```
 
 ## Importing data
 
 ```{r}
-flights <- read_csv("data/flights.csv")
+flights <- read_csv("http://tinyurl.com/nyc13flights")
 flights
 ```
-
-# Manipulating data in R {background-color="#2C404A"}
-
-## Data manipulation
-
-There are at least two characteristics that a good data manipulation software should have:
-
-. . .
-
-1. **speed**: results are returned in a reasonable time
-
-. . .
-
-2. **elegance**: easy to use and to understand what the code is doing
-
-. . .
-
-> The **tidyverse** is an opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures.
-
-## The tidyverse
-
-The tidyverse is a **meta package** that provides a collection of tools (across different packages) that are designed for data science.
-
-<center>
-<img src="https://tidyverse.tidyverse.org/logo.png" width="400"/>
-</center>
-
-<center>
-<img src="https://dplyr.tidyverse.org/logo.png" width="200"/> <img src="https://tidyr.tidyverse.org/logo.png" width="200"/> <img src="https://readr.tidyverse.org/logo.png" width="200"/> <img src="https://readxl.tidyverse.org/logo.png" width="200"/> <img src="https://ggplot2.tidyverse.org/logo.png" width="200"/><img src="https://stringr.tidyverse.org/logo.png" width="200"/><img src="https://lubridate.tidyverse.org/logo.png" width="200"/><img src="https://purrr.tidyverse.org/logo.png" width="200"/><img src="https://forcats.tidyverse.org/logo.png" width="200"/>
-</center>
-
-## The tidyverse
-
-The package is not included in the base installation of R.
-
-```{r}
-#| eval: false
-# Install the tidyverse packages
-install.packages("tidyverse")
-```
-
-```{r}
-#| eval: false
-# Load all the packages included in tidyverse
-library(tidyverse)
-```
-
-<center>
-<img src="https://tidyverse.tidyverse.org/logo.png" width="400"/>
-</center>
 
 # Data manipulation with {dplyr} and {tidyr} {background-color="#2C404A"}
 
@@ -394,8 +388,356 @@ filter([\<dataframe\>]{.fragment .highlight-orange}, [\<logical expression\>]{.f
 
 ## The `filter()` function
 
-Example 1: [select all flights with a tail number equal to "**N14228**".]{.text-outline}
+Example 1: [select all flights going to the **ORD** airport]{.text-outline}
 
 ```{r}
 filter(flights, dest == "ORD")
+```
+
+## The `filter()` function
+
+Example 2: [select all flights that departed after 3 PM]{.text-outline}
+
+```{r}
+filter(flights, hour > 15)
+```
+
+## The `select()` function
+
+- `select()` is used to extract column(s) from a data frame.
+
+- Useful when you want to perform data analysis on specific column(s) and not the complete dataset.
+
+::: fragment
+
+::: {.r-fit-text}
+
+::: {.code}
+
+select([\<dataframe\>]{.fragment .highlight-orange}, [\<column(s)\>]{.fragment .highlight-pastel})
+
+:::
+:::
+
+:::
+
+## The `select()` function
+
+Example 1: [select "**faa**" and "**name**" columns from the `airports` data frame.]{.text-outline}
+
+```{r}
+select(airports, faa, name)
+```
+
+## The `select()` function
+
+You can also use `select()` to remove columns with the `-` operator.
+
+Example 2: [select all columns from `airports` except "**faa**" and "**name**".]{.text-outline}
+
+```{r}
+select(airports, -faa, -name)
+```
+
+## The `select()` function
+
+It is also possible to select columns using **helper functions**.
+
+Example 3: [select "**year**", and all columns that start with "**dep_**" from `flights`.]{.text-outline}
+
+```{r}
+select(flights, year, starts_with("m"))
+```
+
+## The `mutate()` function
+
+- The `mutate()` function is used to add or modify existing column(s) inside a data frame.
+
+- The function takes a data frame, and one or more expressions that add/modify columns.
+
+::: fragment
+
+::: {.r-fit-text}
+
+::: {.code}
+
+mutate([\<dataframe\>]{.fragment .highlight-orange}, [\<expression\>]{.fragment .highlight-pastel})
+
+:::
+:::
+
+:::
+
+## The `mutate()` function
+
+Example 1:
+
+[add a new column named `distance_km` which converts the `distance` column, which is the flight distance in miles, into km.]{.text-outline .r-fit-text}
+
+```{r}
+#| code-line-numbers: "1-5|2|3|4|1-5"
+mutate(
+  flights,
+  distance_km = distance / 0.62137
+)
+```
+
+## The `mutate()` function
+
+It is also possible to add many new variables in a single operation.
+
+```{r}
+#| code-line-numbers: "3-4|1-6"
+mutate(
+  flights,
+  distance_km = distance / 0.62137,
+  distance_knot = distance / 1.15078
+)
+```
+
+## The `mutate()` function
+
+Let's create a departure time column based on the `year`, `month`, `day`, `hour` and `minute` columns, using the `make_datetime()` function from the `lubridate` package.
+
+```{r, echo = c(-1, -3)}
+old <- options(width = 100)
+mutate(flights, departure_time = make_datetime(year, month, day, hour, minute))
+options(old)
+```
+
+## The `summarise()` function
+
+- The `summarise()` function allows summarising columns from a data frame.
+
+- Compress a data frame into single values (i.e. one row).
+  - Hence, you have to provide a function that will be used to calculate a certain value.
+
+::: fragment
+
+::: {.r-fit-text}
+
+::: {.code}
+
+summarise([\<dataframe\>]{.fragment .highlight-orange}, [\<expression\>]{.fragment .highlight-pastel})
+
+:::
+:::
+
+:::
+
+## The `summarise()` function
+
+Example 1: [Calculate the average `distance` column]{.text-outline}
+
+```{r}
+#| code-line-numbers: "1-4|3|1-4"
+summarise(
+  flights,
+  average_distance = mean(distance)
+)
+```
+
+## The `summarise()` function
+
+It can be useful to know how many observations (rows) were used. This can be calculated using the `n()` function.
+
+```{r}
+#| code-line-numbers: "4"
+summarise(
+  flights,
+  average_distance = mean(distance),
+  n = n()
+)
+```
+
+## The `summarise()` function
+
+It is also possible to use a summarising function **by group** using the `by` argument.
+
+```{r}
+#| code-line-numbers: "5"
+summarise(
+  flights,
+  average_distance = mean(distance),
+  n = n(),
+  .by = origin
+)
+```
+
+# Joining tables {background-color="#2C404A"}
+
+## Joining tables
+
+- Data are rarely stored in a single data frame or a single file.
+
+- Good database practices recommend having similar data in separate tables.
+
+- Joins are used to **merge data frame** together.
+
+::: fragment
+
+::: {.r-fit-text}
+
+::: {.code}
+
+\*\_join([\<dataframe\>]{.fragment .highlight-orange}, [\<dataframe\>]{.fragment .highlight-pastel})
+
+:::
+:::
+
+:::
+
+## Understanding joins
+
+<figure>
+  <center>
+  <img src="images/join_types.svg" alt="Ven diagrams showing the main type of SQL joins" style="width:65%">
+  <figcaption>Types of equality and filtering joins</figcaption>
+  </center>
+</figure>
+
+## Joining airports and flights
+
+```{r}
+head(flights)
+head(airports)
+```
+
+## Joining airports and flights
+
+If we try to left join the `flights` and `airports` data frames, we get an error because there is no common column between the two data frames.
+
+```{r}
+#| error: true
+left_join(flights, airports)
+```
+
+## Joining airports and flights
+
+We can use the `dest` column from the `flights` data frame and the `faa` column from the `airports` data frame.
+
+```{r}
+left_join(flights, airports, by = join_by(dest == faa))
+```
+
+## Joining airports and flights
+
+We can see that some of the `dest` codes are not present in the `airports` data frame. Anti-joins can be used to keep only the rows that do not match between the two data frames.
+
+```{r}
+anti_join(flights, airports, by = join_by(dest == faa))
+```
+
+## Joining airports and flights
+
+Filtering joins can be used to keep only the rows that match between the two data frames.
+
+```{r}
+semi_join(flights, airports, by = join_by(dest == faa))
+```
+
+## Joining airports and flights
+
+Full joins can be used to keep all rows from both data frames.
+
+```{r}
+full_join(flights, airports, by = join_by(dest == faa))
+```
+
+# Tidy data {background-color="#2C404A"}
+
+## Tidy data
+
+In a tidy data set, each row correspond to an **observation** whereas each column is a **variable**.
+
+Tidying a dataset consists in cleaning and structuring datasets to facilitate analysis.
+
+## What is a messy dataset?
+
+<small>
+https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html
+</small>
+
+There are five main common problems that define a messy dataset:
+
+1. Column headers are values, not variable names.
+2. Multiple variables are stored in one column.
+3. Variables are stored in both rows and columns.
+4. Multiple types of observational units are stored in the same table.
+5. A single observational unit is stored in multiple tables.
+
+## Column headers are values
+
+The religion income dataset is an example of a dataset where the column headers are values, not variable names. The table below shows the first 6 rows of the dataset.
+
+```{r}
+relig_income <- read_csv("http://tinyurl.com/religionincome")
+head(relig_income)
+```
+
+## Column headers are values
+
+To fix this, we have to pivot the data frame using the `pivot_longer()` function. We have to specify the column(s) that will be used as **identifier variables** (i.e. the columns that will not be modified) and the column(s) that will be used as **measured variables** (i.e. the columns that will be modified).
+
+::: fragment
+
+::: {.r-fit-text}
+
+::: {.code}
+
+pivot_longer([\<dataframe\>]{.fragment .highlight-orange}, [\<columns to pivot\>]{.fragment .highlight-pastel})
+
+:::
+:::
+:::
+
+::: fragment
+
+```{r}
+head(relig_income)
+```
+
+:::
+
+## Column headers are values
+
+We can see that the `pivot_longer()` function has created two new columns: `income` and `count`.
+
+```{r}
+pivot_longer(relig_income, -religion, names_to = "income", values_to = "count")
+```
+
+## Multiple variables are stored in one column
+
+```{r}
+tb <- read_csv("http://tinyurl.com/whotuber")
+head(tb)
+```
+
+## Multiple variables are stored in one column
+
+First, we have to pivot the data frame using the `pivot_longer()`.
+
+```{r}
+tb_pivot <- pivot_longer(tb, !c(country, year), values_to = "count", names_to = "demo")
+tb_pivot
+```
+
+## Multiple variables are stored in one column
+
+Then, we have to separate the `demo` column into three columns using the `separate()` function.
+
+```{r}
+tb_tidy <- separate_wider_delim(
+  tb_pivot,
+  demo,
+  delim = "_",
+  names = c("case", "sex", "age_group")
+)
+```
+
+## Multiple
+
+```{r}
+tb_tidy
 ```
