@@ -129,7 +129,7 @@ in
 
 - [**Part 3 (~ 90 minutes)**]{style="font-size:1.25em"}
 
-  - Working on your own data
+  - Working on your data
 
 :::
 
@@ -303,7 +303,7 @@ Today's data comes from the `nycflights13` R package.
 
 - This package contains information about all flights that departed from New York airports (i.e., **EWR**, **JFK** and **LGA**) in 2013.
 
-- Will use a reduced version of the data set for the purpose of this workshop.
+- Will use a reduced version of the data set for this workshop.
 
 - Two data frames are available:
 
@@ -687,7 +687,7 @@ Tidying a dataset consists of cleaning and structuring datasets to facilitate an
 [https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html](https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html)
 </small>
 
-There are five main common problems that define a messy dataset:
+Five main common problems define a messy dataset:
 
 1. Column headers are values, not variable names.
 2. Multiple variables are stored in one column.
@@ -900,7 +900,7 @@ df <- mutate(
 df
 ```
 
-- Note that we now all columns are numeric and can be used to perform calculations.
+- Note that all columns are now numeric and can be used to perform calculations.
 
 ## Tidying geographical coordinates
 
