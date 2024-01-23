@@ -1,6 +1,5 @@
 ---
 title: 'Efficient data manipulation with {{< fa brands r-project >}} and {{< fa brands python >}}'
-# subtitle: "You too can be a pro!!!"
 author: 'Pascal Guillot & Philippe Massicotte'
 date: '2024-02-05'
 date-format: 'long'
@@ -30,7 +29,7 @@ knitr:
 
 execute:
   freeze: auto
-  cache: false
+  cache: true
   echo: true
   fig-width: 6
   fig-height: 4
@@ -113,7 +112,7 @@ in
 
 - [**Part 1 (~ 30 minutes)**]{style="font-size:1.25em"}
 
-  - Recap of what is tidy data and why it is important?
+  - Recap of what is tidy data and why it is important.
 
 - [**Part 2 (~ 60 minutes)**]{style="font-size:1.25em"}
 
@@ -124,13 +123,13 @@ in
     - **grouping**, **summarizing** / **aggregating** rows
     - **joining** data from multiple sources
     - **pivoting** data, **separating columns** into multiple columns
+    - **tidying** data
 
 - [**BREAK! (30 minutes)**]{style="font-size:1.25em;"} {{< fa mug-hot >}} {{< fa cookie-bite >}}
 
 - [**Part 3 (~ 90 minutes)**]{style="font-size:1.25em"}
 
-  1. Working on your own data
-  2. Data challenge: _SQL Murder Mystery_
+  - Working on your own data
 
 :::
 
@@ -300,11 +299,6 @@ Examples of [\<options\>]{.background-pastel .code} can be:
 
 Today's data comes from the `nycflights13` R package.
 
-```{r}
-#| eval: false
-install.packages("nycflights13")
-```
-
 ::: {.incremental}
 
 - This package contains information about all flights that departed from New York airports (i.e., **EWR**, **JFK** and **LGA**) in 2013.
@@ -315,6 +309,17 @@ install.packages("nycflights13")
 
   - `airports`: Information about each airport (name, geographical coordinates)
   - `flights`: Information about each flight (departure time, origin and destination airports)
+
+:::
+
+::: {.fragment}
+
+If you want to install the package and get access to all the data:
+
+```{r}
+#| eval: false
+install.packages("nycflights13")
+```
 
 :::
 
@@ -443,7 +448,7 @@ select(airports, -faa, -name)
 
 It is also possible to select columns using **helper functions**.
 
-Example 3: [select "**year**", and all columns that start with "**dep_**" from `flights`.]{.text-outline}
+Example 3: [select "**year**", and all columns that start with "**m**" from `flights`]{.text-outline}
 
 ```{r}
 select(flights, year, starts_with("m"))
@@ -472,10 +477,10 @@ mutate([\<dataframe\>]{.fragment .highlight-orange}, [\<expression\>]{.fragment 
 
 Example 1:
 
-[add a new column named `distance_km` which converts the `distance` column, which is the flight distance in miles, into km.]{.text-outline .r-fit-text}
+[add a new column named `distance_km` which converts the `distance` column, which is the flight distance in miles, into km]{.text-outline .r-fit-text}
 
 ```{r}
-#| code-line-numbers: "1-5|2|3|4|1-5"
+#| code-line-numbers: "1-4|2|3|1-5"
 mutate(
   flights,
   distance_km = distance / 0.62137
@@ -484,7 +489,7 @@ mutate(
 
 ## The `mutate()` function
 
-It is also possible to add many new variables in a single operation.
+It is also possible to add many variables in a single operation.
 
 ```{r}
 #| code-line-numbers: "3-4|1-6"
@@ -503,6 +508,26 @@ Let's create a departure time column based on the `year`, `month`, `day`, `hour`
 old <- options(width = 100)
 mutate(flights, departure_time = make_datetime(year, month, day, hour, minute))
 options(old)
+```
+
+## A note on date time
+
+- With lubridate, you can convert time zones using the `with_tz()` function.
+
+- First, we use the `ymd_hms()` function to create date time object from a string.
+
+  - The `tz` argument is used to specify the time zone.
+
+```{r}
+x <- ymd_hms("2024-01-23 13:58:00", tz = "UTC")
+x
+```
+
+- The `with_tz()` function can be used to convert the time zone.
+
+```{r}
+with_tz(x, "America/Los_Angeles")
+with_tz(x, "EST")
 ```
 
 ## The `summarise()` function
@@ -527,7 +552,7 @@ summarise([\<dataframe\>]{.fragment .highlight-orange}, [\<expression\>]{.fragme
 
 ## The `summarise()` function
 
-Example 1: [Calculate the average `distance` column]{.text-outline}
+Example 1: [calculate the average `distance` column]{.text-outline}
 
 ```{r}
 #| code-line-numbers: "1-4|3|1-4"
@@ -539,7 +564,9 @@ summarise(
 
 ## The `summarise()` function
 
-It can be useful to know how many observations (rows) were used. This can be calculated using the `n()` function.
+- It can be useful to know how many observations (rows) were used.
+
+- This can be calculated using the `n()` function.
 
 ```{r}
 #| code-line-numbers: "4"
@@ -572,7 +599,9 @@ summarise(
 
 - Good database practices recommend having similar data in separate tables.
 
-- Joins are used to **merge data frame** together.
+  - This is the case for the `flights` and `airports` data frames.
+
+- Joins are used to **merge data frames** together.
 
 ::: fragment
 
@@ -605,7 +634,7 @@ head(airports)
 
 ## Joining airports and flights
 
-If we try to left join the `flights` and `airports` data frames, we get an error because there is no common column between the two data frames.
+If we try to left join the `flights` and `airports` data frames, we get an error because there is no common column(s) between the two data frames.
 
 ```{r}
 #| error: true
@@ -614,7 +643,7 @@ left_join(flights, airports)
 
 ## Joining airports and flights
 
-We can use the `dest` column from the `flights` data frame and the `faa` column from the `airports` data frame.
+We can use the `dest` column from the `flights` data frame and the `faa` column from the `airports` data frame as a common key.
 
 ```{r}
 left_join(flights, airports, by = join_by(dest == faa))
@@ -648,14 +677,14 @@ full_join(flights, airports, by = join_by(dest == faa))
 
 ## Tidy data
 
-In a tidy data set, each row correspond to an **observation** whereas each column is a **variable**.
+In a tidy data set, each row corresponds to an **observation** whereas each column is a **variable**.
 
-Tidying a dataset consists in cleaning and structuring datasets to facilitate analysis.
+Tidying a dataset consists of cleaning and structuring datasets to facilitate analysis.
 
 ## What is a messy dataset?
 
 <small>
-https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html
+[https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html](https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html)
 </small>
 
 There are five main common problems that define a messy dataset:
@@ -668,7 +697,7 @@ There are five main common problems that define a messy dataset:
 
 ## Column headers are values
 
-The religion income dataset is an example of a dataset where the column headers are values, not variable names. The table below shows the first 6 rows of the dataset.
+[The religion income dataset](https://www.pewresearch.org/religion/religious-landscape-study/) is an example of a dataset where the column headers are values, not variable names. The table below shows the first 6 rows of the dataset.
 
 ```{r}
 relig_income <- read_csv("http://tinyurl.com/religionincome")
@@ -703,9 +732,30 @@ head(relig_income)
 
 We can see that the `pivot_longer()` function has created two new columns: `income` and `count`.
 
+:::: {.columns}
+
+::: {.column width="50%"}
+
 ```{r}
-pivot_longer(relig_income, -religion, names_to = "income", values_to = "count")
+relig_income_pivot <- pivot_longer(
+  relig_income,
+  -religion,
+  names_to = "income",
+  values_to = "count"
+)
 ```
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+relig_income_pivot
+```
+
+:::
+
+::::
 
 ## Multiple variables are stored in one column
 
@@ -718,14 +768,34 @@ head(tb)
 
 First, we have to pivot the data frame using the `pivot_longer()`.
 
+:::: {.columns}
+
+::: {.column width="50%"}
+
 ```{r}
-tb_pivot <- pivot_longer(tb, !c(country, year), values_to = "count", names_to = "demo")
+tb_pivot <- pivot_longer(
+  data = tb,
+  cols = !c(country, year),
+  values_to = "count",
+  names_to = "demo"
+)
+```
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
 tb_pivot
 ```
 
+:::
+
+::::
+
 ## Multiple variables are stored in one column
 
-Then, we have to separate the `demo` column into three columns using the `separate()` function.
+Then, we can separate the `demo` column into three columns using the `separate_wider_delim()` function.
 
 ```{r}
 tb_tidy <- separate_wider_delim(
@@ -736,8 +806,115 @@ tb_tidy <- separate_wider_delim(
 )
 ```
 
-## Multiple
+## Multiple variables are stored in one column
+
+Note that the `separate_wider_delim()` function has created three new columns: `case`, `sex` and `age_group` and removed the `demo` column.
 
 ```{r}
 tb_tidy
+```
+
+## Multiple variables are stored in one column
+
+We can remove NA values using the `drop_na()` function.
+
+```{r}
+tb_tidy <- drop_na(tb_tidy)
+tb_tidy
+```
+
+## Tidying geographical coordinates
+
+- Geographical coordinates are often stored as degrees, minutes and seconds (DMS) in separate columns as characters.
+
+- Such a format makes it difficult to work with
+  - ex.: coordinate system transformation, or plotting
+
+```{r}
+df <- read_csv("http://tinyurl.com/coordsdms")
+df
+```
+
+- We can observe that the `lon` and `lat` columns are character vectors and that the coordinates are stored as degrees, minutes and seconds.
+
+- Note also the characters `W` and `N` that indicate the direction of the coordinates.
+
+## Tidying geographical coordinates
+
+- First, we have to replace the `W` and `S` characters by `-` to indicate that the coordinates are negative.
+
+- This can be done using the `str_replace()` function from the `stringr` package.
+
+```{r}
+#| code-line-numbers: "1-7|3-4|1-7"
+df <- mutate(
+  df,
+  lon = str_replace(lon, "W", "-"),
+  lat = str_replace(lat, "S", "-")
+)
+
+df
+```
+
+## Tidying geographical coordinates
+
+We can now use the `separate_wider_delim()` function to separate the `lon` and `lat` columns into three columns: `deg`, `minutes` and `seconds`.
+
+```{r}
+#| code-line-numbers: "1-17|2-8|1-17"
+# Separate the lon column
+df <- separate_wider_delim(
+  df,
+  lon,
+  delim = " ",
+  names = c("deg", "minutes", "seconds"),
+  names_sep = "_"
+)
+
+# Separate the lat column
+df <- separate_wider_delim(
+  df,
+  lat,
+  delim = " ",
+  names = c("deg", "minutes", "seconds"),
+  names_sep = "_"
+)
+```
+
+## Tidying geographical coordinates
+
+```{r}
+df
+```
+
+## Tidying geographical coordinates
+
+- We can now convert the `deg`, `minutes` and `seconds` columns to numeric using the `parse_number()` function from the `readr` package.
+
+```{r}
+df <- mutate(
+  df,
+  across(everything(), parse_number)
+)
+
+df
+```
+
+## Tidying geographical coordinates
+
+Finally, we can convert the coordinates to decimal degrees using the following formula:
+
+$$
+\text{decimal degrees} = \text{degrees} + \frac{\text{minutes}}{60} + \frac{\text{seconds}}{3600}
+$$
+
+```{r}
+df <- mutate(
+  df,
+  lon = lon_deg + (lon_minutes / 60) + (lon_seconds / 3600),
+  lat = lat_deg + (lat_minutes / 60) + (lat_seconds / 3600),
+  .keep = "unused" # drop other columns
+)
+
+df
 ```
