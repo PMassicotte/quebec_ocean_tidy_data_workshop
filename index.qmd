@@ -900,7 +900,7 @@ df <- mutate(
 df
 ```
 
-- Note that all columns are now numeric and can be used to perform calculations.
+- Now that all columns are now numeric, they can be used to perform calculations.
 
 ## Tidying geographical coordinates
 
