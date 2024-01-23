@@ -64,6 +64,7 @@ theme_update(
 # https://github.com/EmilHvitfeldt/talk-purrr-ocrug-2023/blob/main/index.qmd
 ```
 
+
 ## Who am I
 
 :::: {.columns}
@@ -213,6 +214,7 @@ The tidyverse is a **meta package** that provides a collection of tools (across 
 
 The package is not included in the base installation of R.
 
+
 ```{r}
 #| eval: false
 # Install the tidyverse packages
@@ -224,6 +226,7 @@ install.packages("tidyverse")
 # Load all the packages included in tidyverse
 library(tidyverse)
 ```
+
 
 # Importing data {background-color="#2C404A"}
 
@@ -316,26 +319,32 @@ Today's data comes from the `nycflights13` R package.
 
 If you want to install the package and get access to all the data:
 
+
 ```{r}
 #| eval: false
 install.packages("nycflights13")
 ```
 
+
 :::
 
 ## Importing data
+
 
 ```{r}
 airports <- read_csv("http://tinyurl.com/nyc13airports")
 airports
 ```
 
+
 ## Importing data
+
 
 ```{r}
 flights <- read_csv("http://tinyurl.com/nyc13flights")
 flights
 ```
+
 
 # Data manipulation with {dplyr} and {tidyr} {background-color="#2C404A"}
 
@@ -395,17 +404,21 @@ filter([\<dataframe\>]{.fragment .highlight-orange}, [\<logical expression\>]{.f
 
 Example 1: [select all flights going to the **ORD** airport]{.text-outline}
 
+
 ```{r}
 filter(flights, dest == "ORD")
 ```
+
 
 ## The `filter()` function
 
 Example 2: [select all flights that departed after 3 PM]{.text-outline}
 
+
 ```{r}
 filter(flights, hour > 15)
 ```
+
 
 ## The `select()` function
 
@@ -430,9 +443,11 @@ select([\<dataframe\>]{.fragment .highlight-orange}, [\<column(s)\>]{.fragment .
 
 Example 1: [select "**faa**" and "**name**" columns from the `airports` data frame.]{.text-outline}
 
+
 ```{r}
 select(airports, faa, name)
 ```
+
 
 ## The `select()` function
 
@@ -440,9 +455,11 @@ You can also use `select()` to remove columns with the `-` operator.
 
 Example 2: [select all columns from `airports` except "**faa**" and "**name**".]{.text-outline}
 
+
 ```{r}
 select(airports, -faa, -name)
 ```
+
 
 ## The `select()` function
 
@@ -450,9 +467,11 @@ It is also possible to select columns using **helper functions**.
 
 Example 3: [select "**year**", and all columns that start with "**m**" from `flights`]{.text-outline}
 
+
 ```{r}
 select(flights, year, starts_with("m"))
 ```
+
 
 ## The `mutate()` function
 
@@ -479,6 +498,7 @@ Example 1:
 
 [add a new column named `distance_km` which converts the `distance` column, which is the flight distance in miles, into km]{.text-outline .r-fit-text}
 
+
 ```{r}
 #| code-line-numbers: "1-4|2|3|1-5"
 mutate(
@@ -487,9 +507,11 @@ mutate(
 )
 ```
 
+
 ## The `mutate()` function
 
 It is also possible to add many variables in a single operation.
+
 
 ```{r}
 #| code-line-numbers: "3-4|1-6"
@@ -500,15 +522,18 @@ mutate(
 )
 ```
 
+
 ## The `mutate()` function
 
 Let's create a departure time column based on the `year`, `month`, `day`, `hour` and `minute` columns, using the `make_datetime()` function from the `lubridate` package.
+
 
 ```{r, echo = c(-1, -3)}
 old <- options(width = 100)
 mutate(flights, departure_time = make_datetime(year, month, day, hour, minute))
 options(old)
 ```
+
 
 ## A note on date time
 
@@ -518,17 +543,21 @@ options(old)
 
   - The `tz` argument is used to specify the time zone.
 
+
 ```{r}
 x <- ymd_hms("2024-01-23 13:58:00", tz = "UTC")
 x
 ```
 
+
 - The `with_tz()` function can be used to convert the time zone.
+
 
 ```{r}
 with_tz(x, "America/Los_Angeles")
 with_tz(x, "EST")
 ```
+
 
 ## The `summarise()` function
 
@@ -554,6 +583,7 @@ summarise([\<dataframe\>]{.fragment .highlight-orange}, [\<expression\>]{.fragme
 
 Example 1: [calculate the average `distance` column]{.text-outline}
 
+
 ```{r}
 #| code-line-numbers: "1-4|3|1-4"
 summarise(
@@ -562,11 +592,13 @@ summarise(
 )
 ```
 
+
 ## The `summarise()` function
 
 - It can be useful to know how many observations (rows) were used.
 
 - This can be calculated using the `n()` function.
+
 
 ```{r}
 #| code-line-numbers: "4"
@@ -577,9 +609,11 @@ summarise(
 )
 ```
 
+
 ## The `summarise()` function
 
 It is also possible to use a summarising function **by group** using the `by` argument.
+
 
 ```{r}
 #| code-line-numbers: "5"
@@ -590,6 +624,7 @@ summarise(
   .by = origin
 )
 ```
+
 
 # Joining tables {background-color="#2C404A"}
 
@@ -627,51 +662,63 @@ summarise(
 
 ## Joining airports and flights
 
+
 ```{r}
 head(flights)
 head(airports)
 ```
 
+
 ## Joining airports and flights
 
 If we try to left join the `flights` and `airports` data frames, we get an error because there is no common column(s) between the two data frames.
+
 
 ```{r}
 #| error: true
 left_join(flights, airports)
 ```
 
+
 ## Joining airports and flights
 
 We can use the `dest` column from the `flights` data frame and the `faa` column from the `airports` data frame as a common key.
+
 
 ```{r}
 left_join(flights, airports, by = join_by(dest == faa))
 ```
 
+
 ## Joining airports and flights
 
 We can see that some of the `dest` codes are not present in the `airports` data frame. Anti-joins can be used to keep only the rows that do not match between the two data frames.
+
 
 ```{r}
 anti_join(flights, airports, by = join_by(dest == faa))
 ```
 
+
 ## Joining airports and flights
 
 Filtering joins can be used to keep only the rows that match between the two data frames.
+
 
 ```{r}
 semi_join(flights, airports, by = join_by(dest == faa))
 ```
 
+
 ## Joining airports and flights
 
 Full joins can be used to keep all rows from both data frames.
 
+
 ```{r}
 full_join(flights, airports, by = join_by(dest == faa))
 ```
+
 
 # Tidy data {background-color="#2C404A"}
 
@@ -699,10 +746,12 @@ There are five main common problems that define a messy dataset:
 
 [The religion income dataset](https://www.pewresearch.org/religion/religious-landscape-study/) is an example of a dataset where the column headers are values, not variable names. The table below shows the first 6 rows of the dataset.
 
+
 ```{r}
 relig_income <- read_csv("http://tinyurl.com/religionincome")
 head(relig_income)
 ```
+
 
 ## Column headers are values
 
@@ -722,9 +771,11 @@ pivot_longer([\<dataframe\>]{.fragment .highlight-orange}, [\<columns to pivot\>
 
 ::: fragment
 
+
 ```{r}
 head(relig_income)
 ```
+
 
 :::
 
@@ -736,6 +787,7 @@ We can see that the `pivot_longer()` function has created two new columns: `inco
 
 ::: {.column width="50%"}
 
+
 ```{r}
 relig_income_pivot <- pivot_longer(
   relig_income,
@@ -745,13 +797,16 @@ relig_income_pivot <- pivot_longer(
 )
 ```
 
+
 :::
 
 ::: {.column width="50%"}
 
+
 ```{r}
 relig_income_pivot
 ```
+
 
 :::
 
@@ -759,10 +814,12 @@ relig_income_pivot
 
 ## Multiple variables are stored in one column
 
+
 ```{r}
 tb <- read_csv("http://tinyurl.com/whotuber")
 head(tb)
 ```
+
 
 ## Multiple variables are stored in one column
 
@@ -771,6 +828,7 @@ First, we have to pivot the data frame using the `pivot_longer()`.
 :::: {.columns}
 
 ::: {.column width="50%"}
+
 
 ```{r}
 tb_pivot <- pivot_longer(
@@ -781,13 +839,16 @@ tb_pivot <- pivot_longer(
 )
 ```
 
+
 :::
 
 ::: {.column width="50%"}
 
+
 ```{r}
 tb_pivot
 ```
+
 
 :::
 
@@ -796,6 +857,7 @@ tb_pivot
 ## Multiple variables are stored in one column
 
 Then, we can separate the `demo` column into three columns using the `separate_wider_delim()` function.
+
 
 ```{r}
 tb_tidy <- separate_wider_delim(
@@ -806,22 +868,27 @@ tb_tidy <- separate_wider_delim(
 )
 ```
 
+
 ## Multiple variables are stored in one column
 
 Note that the `separate_wider_delim()` function has created three new columns: `case`, `sex` and `age_group` and removed the `demo` column.
 
+
 ```{r}
 tb_tidy
 ```
+
 
 ## Multiple variables are stored in one column
 
 We can remove NA values using the `drop_na()` function.
 
+
 ```{r}
 tb_tidy <- drop_na(tb_tidy)
 tb_tidy
 ```
+
 
 ## Tidying geographical coordinates
 
@@ -830,10 +897,12 @@ tb_tidy
 - Such a format makes it difficult to work with
   - ex.: coordinate system transformation, or plotting
 
+
 ```{r}
 df <- read_csv("http://tinyurl.com/coordsdms")
 df
 ```
+
 
 - We can observe that the `lon` and `lat` columns are character vectors and that the coordinates are stored as degrees, minutes and seconds.
 
@@ -844,6 +913,7 @@ df
 - First, we have to replace the `W` and `S` characters by `-` to indicate that the coordinates are negative.
 
 - This can be done using the `str_replace()` function from the `stringr` package.
+
 
 ```{r}
 #| code-line-numbers: "1-7|3-4|1-7"
@@ -856,9 +926,11 @@ df <- mutate(
 df
 ```
 
+
 ## Tidying geographical coordinates
 
 We can now use the `separate_wider_delim()` function to separate the `lon` and `lat` columns into three columns: `deg`, `minutes` and `seconds`.
+
 
 ```{r}
 #| code-line-numbers: "1-17|2-8|1-17"
@@ -881,15 +953,19 @@ df <- separate_wider_delim(
 )
 ```
 
+
 ## Tidying geographical coordinates
+
 
 ```{r}
 df
 ```
 
+
 ## Tidying geographical coordinates
 
 - We can now convert the `deg`, `minutes` and `seconds` columns to numeric using the `parse_number()` function from the `readr` package.
+
 
 ```{r}
 df <- mutate(
@@ -899,6 +975,7 @@ df <- mutate(
 
 df
 ```
+
 
 - Note that we now all columns are numeric and can be used to perform calculations.
 
@@ -910,6 +987,7 @@ $$
 \text{decimal degrees} = \text{degrees} + \frac{\text{minutes}}{60} + \frac{\text{seconds}}{3600}
 $$
 
+
 ```{r}
 df <- mutate(
   df,
@@ -920,3 +998,4 @@ df <- mutate(
 
 df
 ```
+
