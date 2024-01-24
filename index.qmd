@@ -8,6 +8,8 @@ chalkboard:
   theme: whiteboard
 format:
   revealjs:
+    logo: images/logos/logo_quebec_ocean.png
+    footer: '<https://pmassicotte.github.io/quebec_ocean_tidy_data_workshop/>'
     theme:
       - solarized
       - theme.scss
@@ -74,11 +76,11 @@ theme_update(
 
 <br>
 
-::: {layout="[[1,1], [1]]"}
+::: {layout="[[1], [1,1]]"}
+
+![](images/logos/logo_quebec_ocean.png)
 
 ![](images/logos/takuvik.svg)
-
-![](images/logos/sn.png)
 
 ![](images/logos/ulaval.svg)
 
@@ -93,8 +95,8 @@ theme_update(
 
 [Research assistant at Takuvik (Laval University)]{style="font-weight:bold;font-size:1.5em"}
 
-<small>_Remote sensing, modelling, data science, data visualization_</small><br>
-in
+<small>_Remote sensing, modelling, data science, data visualization, programming_</small><br>
+
 {{< fa brands github >}} [My GitHub](https://github.com/PMassicotte){style="font-weight:bold;"}
 
 {{< fa brands twitter >}} [Follow me on Twitter](https://twitter.com/philmassicotte){style="font-weight:bold;"}
@@ -123,7 +125,6 @@ in
     - **grouping**, **summarizing** / **aggregating** rows
     - **joining** data from multiple sources
     - **pivoting** data, **separating columns** into multiple columns
-    - **tidying** data
 
 - [**BREAK! (30 minutes)**]{style="font-size:1.25em;"} {{< fa mug-hot >}} {{< fa cookie-bite >}}
 
@@ -132,29 +133,6 @@ in
   - Working on your data
 
 :::
-
-## Context
-
-:::: {.columns}
-
-::: {.column width='70%'}
-
-<figure>
-<center>
-<img src="images/environmental-data-science-r4ds-general.png" alt="The expanded version of the classic Grolemund & Wickham R4DS workflow, including environmental data & sci comm bookends! Envisioned by Dr. Julia Lowndes for her useR!2019 keynote. Please cite this illustration as: Updated from Grolemund & Wickham's classis R4DS schematic, envisioned by Dr. Julia Lowndes for her 2019 useR! keynote talk and illustrated by Allison Horst." style="width:85%"/>
-<figcaption>Artwork by Allison Horst</figcaption>
-</center>
-</figure>
-
-:::
-
-::: {.column width='30%'}
-
-> [Data preprocessing is one of the main steps in the data science project life cycle which involves **converting raw data into a refined form amenable to data analysis**. [Source: towards data science](https://towardsdatascience.com/three-critical-elements-of-data-preprocessing-part-2-2078110ae8e7)]{style="font-size:0.9em;"}
-
-:::
-
-::::
 
 ## Context
 
@@ -259,7 +237,7 @@ A data frame can be seen as a matrix with the difference that **columns (variabl
 
 - Most of the time, this is the data structure that will be created when importing data in R.
 
-- There are many functions to import data in R.
+- There are many functions to import data in R using the `readr` package.
 
 | **File format**                    | **Function**   | **Package** |
 | ---------------------------------- | -------------- | ----------- |
@@ -273,7 +251,7 @@ A data frame can be seen as a matrix with the difference that **columns (variabl
 
 ## Reading files
 
-Functions to read files in {{< fa brands r-project >}} often have the same schema:
+Functions to read files in {{< fa brands r-project >}} (using `readr`) often have the same schema:
 
 . . .
 
@@ -295,6 +273,14 @@ Examples of [\<options\>]{.background-pastel .code} can be:
 - The names of the columns to read.
 - The number of rows to read.
 
+. . .
+
+```{r}
+#| eval: false
+# Read the first 10 lines of 'myfile.csv'
+read_csv("myfile.csv", n_max = 10)
+```
+
 ## The `nycflights13` datasets
 
 Today's data comes from the `nycflights13` R package.
@@ -312,7 +298,7 @@ Today's data comes from the `nycflights13` R package.
 
 :::
 
-::: {.fragment}
+. . .
 
 If you want to install the package and get access to all the data:
 
@@ -321,9 +307,11 @@ If you want to install the package and get access to all the data:
 install.packages("nycflights13")
 ```
 
-:::
+s
 
 ## Importing data
+
+Let's import the airports data into a data frame named `airports`.
 
 ```{r}
 airports <- read_csv("http://tinyurl.com/nyc13airports")
@@ -331,6 +319,8 @@ airports
 ```
 
 ## Importing data
+
+Let's import the flights data into a data frame named `flights`.
 
 ```{r}
 flights <- read_csv("http://tinyurl.com/nyc13flights")
@@ -430,9 +420,25 @@ select([\<dataframe\>]{.fragment .highlight-orange}, [\<column(s)\>]{.fragment .
 
 Example 1: [select "**faa**" and "**name**" columns from the `airports` data frame.]{.text-outline}
 
+::: {.columns .r-fit-text}
+
+::: {.column width="60%"}
+
+```{r}
+airports
+```
+
+:::
+
+::: {.column width="60%"}
+
 ```{r}
 select(airports, faa, name)
 ```
+
+:::
+
+:::
 
 ## The `select()` function
 
@@ -504,6 +510,14 @@ mutate(
 
 Let's create a departure time column based on the `year`, `month`, `day`, `hour` and `minute` columns, using the `make_datetime()` function from the `lubridate` package.
 
+```{r}
+flights
+```
+
+## The `mutate()` function
+
+Let's create a departure time column based on the `year`, `month`, `day`, `hour` and `minute` columns, using the `make_datetime()` function from the `lubridate` package.
+
 ```{r, echo = c(-1, -3)}
 old <- options(width = 100)
 mutate(flights, departure_time = make_datetime(year, month, day, hour, minute))
@@ -512,7 +526,7 @@ options(old)
 
 ## A note on date time
 
-- With lubridate, you can convert time zones using the `with_tz()` function.
+- With `lubridate`, you can convert time zones using the `with_tz()` function.
 
 - First, we use the `ymd_hms()` function to create date time object from a string.
 
@@ -552,7 +566,7 @@ summarise([\<dataframe\>]{.fragment .highlight-orange}, [\<expression\>]{.fragme
 
 ## The `summarise()` function
 
-Example 1: [calculate the average `distance` column]{.text-outline}
+Example 1: [calculate the average of the `distance` column]{.text-outline}
 
 ```{r}
 #| code-line-numbers: "1-4|3|1-4"
@@ -564,9 +578,9 @@ summarise(
 
 ## The `summarise()` function
 
-- It can be useful to know how many observations (rows) were used.
+- It can be useful to know how many observations (rows) were used to calculate the average.
 
-- This can be calculated using the `n()` function.
+- This can be done using the `n()` function.
 
 ```{r}
 #| code-line-numbers: "4"
@@ -579,13 +593,29 @@ summarise(
 
 ## The `summarise()` function
 
-It is also possible to use a summarising function **by group** using the `by` argument.
+It is also possible to use a summarising function **by group** using the `.by` argument.
 
 ```{r}
 #| code-line-numbers: "5"
 summarise(
   flights,
   average_distance = mean(distance),
+  n = n(),
+  .by = origin
+)
+```
+
+## The `summarise()` function
+
+Let's also calculate the minimum and maximum distance by origin airport.
+
+```{r}
+#| code-line-numbers: "1-8|3-5|1-8"
+summarise(
+  flights,
+  average_distance = mean(distance),
+  min_distance = min(distance),
+  max_distance = max(distance),
   n = n(),
   .by = origin
 )
@@ -653,6 +683,8 @@ left_join(flights, airports, by = join_by(dest == faa))
 
 We can see that some of the `dest` codes are not present in the `airports` data frame. Anti-joins can be used to keep only the rows that do not match between the two data frames.
 
+[select all `flights` that **are not present** in the `airports` table]{.text-outline}
+
 ```{r}
 anti_join(flights, airports, by = join_by(dest == faa))
 ```
@@ -660,6 +692,8 @@ anti_join(flights, airports, by = join_by(dest == faa))
 ## Joining airports and flights
 
 Filtering joins can be used to keep only the rows that match between the two data frames.
+
+[select only the `flights` that **are present** in the `airports` table]{.text-outline}
 
 ```{r}
 semi_join(flights, airports, by = join_by(dest == faa))
@@ -669,6 +703,8 @@ semi_join(flights, airports, by = join_by(dest == faa))
 
 Full joins can be used to keep all rows from both data frames.
 
+[join both tables and keep all the rows]{.text-outline}
+
 ```{r}
 full_join(flights, airports, by = join_by(dest == faa))
 ```
@@ -677,9 +713,13 @@ full_join(flights, airports, by = join_by(dest == faa))
 
 ## Tidy data
 
-In a tidy data set, each row corresponds to an **observation** whereas each column is a **variable**.
+- In a tidy data set, each row corresponds to an **observation** whereas each column is a **variable**.
 
-Tidying a dataset consists of cleaning and structuring datasets to facilitate analysis.
+- Tidying a dataset consists of cleaning and structuring datasets to facilitate analysis.
+
+<center>
+<img src="images/tidydata_1.jpg" width="1024px"/>
+</center>
 
 ## What is a messy dataset?
 
@@ -757,14 +797,14 @@ relig_income_pivot
 
 ::::
 
-## Multiple variables are stored in one column
+## Multiple variables in one column
 
 ```{r}
 tb <- read_csv("http://tinyurl.com/whotuber")
 head(tb)
 ```
 
-## Multiple variables are stored in one column
+## Multiple variables in one column
 
 First, we have to pivot the data frame using the `pivot_longer()`.
 
@@ -793,7 +833,7 @@ tb_pivot
 
 ::::
 
-## Multiple variables are stored in one column
+## Multiple variables in one column
 
 Then, we can separate the `demo` column into three columns using the `separate_wider_delim()` function.
 
@@ -806,7 +846,7 @@ tb_tidy <- separate_wider_delim(
 )
 ```
 
-## Multiple variables are stored in one column
+## Multiple variables in one column
 
 Note that the `separate_wider_delim()` function has created three new columns: `case`, `sex` and `age_group` and removed the `demo` column.
 
@@ -814,7 +854,7 @@ Note that the `separate_wider_delim()` function has created three new columns: `
 tb_tidy
 ```
 
-## Multiple variables are stored in one column
+## Multiple variables in one column
 
 We can remove NA values using the `drop_na()` function.
 
@@ -920,3 +960,7 @@ df <- mutate(
 
 df
 ```
+
+# Thank you {background-color="#2C404A"}
+
+Questions
