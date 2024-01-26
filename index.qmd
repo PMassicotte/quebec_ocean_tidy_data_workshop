@@ -203,7 +203,7 @@ install.packages("tidyverse")
 library(tidyverse)
 ```
 
-# Importing data {background-color="#2C404A"}
+# Data frames {background-color="#2C404A"}
 
 ## Data frames
 
@@ -233,6 +233,8 @@ library(tidyverse)
 A data frame can be seen as a matrix with the difference that **columns (variables) can be of different types** (numerics, dates, characters, etc.).
 :::
 
+# Importing data into data frames {background-color="#2C404A"}
+
 ## Importing data into data frames
 
 - Most of the time, this is the data structure that will be created when importing data in R.
@@ -247,7 +249,7 @@ A data frame can be seen as a matrix with the difference that **columns (variabl
 | Stata                              | `read_stata()` | haven       |
 | SPSS                               | `read_spss()`  | haven       |
 | SAS                                | `read_sas()`   | haven       |
-| Matlab file (.mat)                 | `readMat()`    | R.matlab    |
+| Matlab files (.mat)                | `readMat()`    | R.matlab    |
 
 ## Reading files
 
@@ -255,31 +257,43 @@ Functions to read files in {{< fa brands r-project >}} (using `readr`) often hav
 
 . . .
 
-::: {.r-fit-text}
+:::: {.r-fit-text}
 ::: {.code}
 
 read\_\*([\"file\"]{.fragment .highlight-orange}, [\<options\>]{.fragment .highlight-pastel})
 
 :::
-:::
+::::
 
 <br>
 
-. . .
+::: {.columns .fragment}
+
+::: {.column width="50%"}
 
 Examples of [\<options\>]{.background-pastel .code} can be:
 
-- A single character used to separate fields within a record: Ex.: `","`, `";"`, `"\t"`.
+- A single character used to separate fields within a record.
+
+  - Ex.: `","`, `";"`, `"\t"`.
+
 - The names of the columns to read.
 - The number of rows to read.
 
-. . .
+:::
+
+::: {.column width="50%"}
+
+Read the first 10 lines of `myfile.csv`
 
 ```{r}
 #| eval: false
-# Read the first 10 lines of 'myfile.csv'
 read_csv("myfile.csv", n_max = 10)
 ```
+
+:::
+
+:::
 
 ## The `nycflights13` datasets
 
@@ -305,9 +319,22 @@ If you want to install the package and get access to all the data:
 ```{r}
 #| eval: false
 install.packages("nycflights13")
+library(nycflights13)
 ```
 
-s
+## Importing data
+
+- The fololowing examples will be using the `airports` and `flights` data frames.
+
+- You can download the data using the following links (they are csv files):
+
+<br>
+
+[<http://tinyurl.com/nyc13airports>]{style="font-weight:bold;font-size:1.5em"}
+
+<br>
+
+[<http://tinyurl.com/nyc13flights>]{style="font-weight:bold;font-size:1.5em"}
 
 ## Importing data
 
@@ -456,9 +483,30 @@ It is also possible to select columns using **helper functions**.
 
 Example 3: [select "**year**", and all columns that start with "**m**" from `flights`]{.text-outline}
 
+::: {.columns .r-fit-text}
+
+::: {.column width="60%"}
+
 ```{r}
 select(flights, year, starts_with("m"))
 ```
+
+:::
+
+::: {.column width="60%"}
+
+There are many helper functions available:
+
+- `starts_with()`
+- `ends_with()`
+- `contains()`
+- `matches()`
+- `num_range()`
+- `one_of()`
+
+:::
+
+:::
 
 ## The `mutate()` function
 
@@ -483,7 +531,7 @@ mutate([\<dataframe\>]{.fragment .highlight-orange}, [\<expression\>]{.fragment 
 
 Example 1:
 
-[add a new column named `distance_km` which converts the `distance` column, which is the flight distance in miles, into km]{.text-outline .r-fit-text}
+[add a new column named `distance_km` which converts the `distance` column, which is the flight distance (in miles), into km]{.text-outline .r-fit-text}
 
 ```{r}
 #| code-line-numbers: "1-4|2|3|1-5"
@@ -498,7 +546,7 @@ mutate(
 It is also possible to add many variables in a single operation.
 
 ```{r}
-#| code-line-numbers: "3-4|1-6"
+#| code-line-numbers: "1-5|3-4|1-5"
 mutate(
   flights,
   distance_km = distance / 0.62137,
@@ -526,16 +574,26 @@ options(old)
 
 ## A note on date time
 
+::: {.incremental}
+
 - With `lubridate`, you can convert time zones using the `with_tz()` function.
 
 - First, we use the `ymd_hms()` function to create date time object from a string.
 
   - The `tz` argument is used to specify the time zone.
 
+:::
+
+::: {.fragment}
+
 ```{r}
 x <- ymd_hms("2024-01-23 13:58:00", tz = "UTC")
 x
 ```
+
+:::
+
+::: {.fragment}
 
 - The `with_tz()` function can be used to convert the time zone.
 
@@ -543,6 +601,8 @@ x
 with_tz(x, "America/Los_Angeles")
 with_tz(x, "EST")
 ```
+
+:::
 
 ## The `summarise()` function
 
@@ -657,6 +717,8 @@ summarise(
 
 ## Joining airports and flights
 
+Let's have a look at the `flights` and `airports` data frames.
+
 ```{r}
 head(flights)
 head(airports)
@@ -664,12 +726,14 @@ head(airports)
 
 ## Joining airports and flights
 
-If we try to left join the `flights` and `airports` data frames, we get an error because there is no common column(s) between the two data frames.
+If we try to left join the `flights` and `airports` data frames, we get this error.
 
 ```{r}
 #| error: true
 left_join(flights, airports)
 ```
+
+This is not working because there is **no common column(s)** between the two data frames.
 
 ## Joining airports and flights
 
@@ -681,7 +745,8 @@ left_join(flights, airports, by = join_by(dest == faa))
 
 ## Joining airports and flights
 
-We can see that some of the `dest` codes are not present in the `airports` data frame. Anti-joins can be used to keep only the rows that do not match between the two data frames.
+- With a left join, we can see that some of the `dest` codes are not present in the `airports` data frame.
+- Anti-joins can be used to keep only the rows that do not match between the two data frames.
 
 [select all `flights` that **are not present** in the `airports` table]{.text-outline}
 
@@ -815,7 +880,7 @@ First, we have to pivot the data frame using the `pivot_longer()`.
 ```{r}
 tb_pivot <- pivot_longer(
   data = tb,
-  cols = !c(country, year),
+  cols = -c(country, year),
   values_to = "count",
   names_to = "demo"
 )
@@ -885,6 +950,18 @@ df
 
 - This can be done using the `str_replace()` function from the `stringr` package.
 
+::: {.columns}
+
+::: {.column width="50%"}
+
+```{r}
+df
+```
+
+:::
+
+::: {.column width="50%"}
+
 ```{r}
 #| code-line-numbers: "1-7|3-4|1-7"
 df <- mutate(
@@ -895,6 +972,10 @@ df <- mutate(
 
 df
 ```
+
+:::
+
+:::
 
 ## Tidying geographical coordinates
 
@@ -932,15 +1013,12 @@ df
 - We can now convert the `deg`, `minutes` and `seconds` columns to numeric using the `parse_number()` function from the `readr` package.
 
 ```{r}
-df <- mutate(
-  df,
-  across(everything(), parse_number)
-)
+df <- mutate(df, across(everything(), parse_number))
 
 df
 ```
 
-- Now that all columns are now numeric, they can be used to perform calculations.
+- All columns are now numeric: they can be used to perform calculations.
 
 ## Tidying geographical coordinates
 

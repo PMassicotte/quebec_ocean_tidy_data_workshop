@@ -537,11 +537,11 @@ Artwork by Allison Horst
 </div>
 </section></section>
 <section>
-<section id="importing-data" class="title-slide slide level1 center" data-background-color="#2C404A">
-<h1>Importing data</h1>
+<section id="data-frames" class="title-slide slide level1 center" data-background-color="#2C404A">
+<h1>Data frames</h1>
 
 </section>
-<section id="data-frames" class="slide level2">
+<section id="data-frames-1" class="slide level2">
 <h2>Data frames</h2>
 <div>
 <ul>
@@ -558,7 +558,7 @@ Artwork by Allison Horst
 </ul>
 </div>
 </section>
-<section id="data-frames-1" class="slide level2">
+<section id="data-frames-2" class="slide level2">
 <h2>Data frames</h2>
 <figure>
 <center>
@@ -578,8 +578,13 @@ Artwork by Allison Horst
 </div>
 </div>
 </div>
+</section></section>
+<section>
+<section id="importing-data-into-data-frames" class="title-slide slide level1 center" data-background-color="#2C404A">
+<h1>Importing data into data frames</h1>
+
 </section>
-<section id="importing-data-into-data-frames" class="slide level2">
+<section id="importing-data-into-data-frames-1" class="slide level2">
 <h2>Importing data into data frames</h2>
 <ul>
 <li><p>Most of the time, this is the data structure that will be created when importing data in R.</p></li>
@@ -625,7 +630,7 @@ Artwork by Allison Horst
 <td>haven</td>
 </tr>
 <tr class="odd">
-<td>Matlab file (.mat)</td>
+<td>Matlab files (.mat)</td>
 <td><code>readMat()</code></td>
 <td>R.matlab</td>
 </tr>
@@ -642,19 +647,23 @@ Artwork by Allison Horst
 </div>
 </div>
 <p><br></p>
-</div>
-<div class="fragment">
+<div class="columns fragment">
+<div class="column" style="width:50%;">
 <p>Examples of <span class="background-pastel code">&lt;options&gt;</span> can be:</p>
 <ul>
-<li>A single character used to separate fields within a record: Ex.: <code>","</code>, <code>";"</code>, <code>"\t"</code>.</li>
-<li>The names of the columns to read.</li>
-<li>The number of rows to read.</li>
+<li><p>A single character used to separate fields within a record.</p>
+<ul>
+<li>Ex.: <code>","</code>, <code>";"</code>, <code>"\t"</code>.</li>
+</ul></li>
+<li><p>The names of the columns to read.</p></li>
+<li><p>The number of rows to read.</p></li>
 </ul>
-</div>
-<div class="fragment">
+</div><div class="column" style="width:50%;">
+<p>Read the first 10 lines of <code>myfile.csv</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a><span class="co"># Read the first 10 lines of 'myfile.csv'</span></span>
-<span id="cb3-2"><a href=""></a><span class="fu">read_csv</span>(<span class="st">"myfile.csv"</span>, <span class="at">n_max =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a><span class="fu">read_csv</span>(<span class="st">"myfile.csv"</span>, <span class="at">n_max =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
 </div>
 </div>
 </section>
@@ -675,10 +684,21 @@ Artwork by Allison Horst
 <div class="fragment">
 <p>If you want to install the package and get access to all the data:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a><span class="fu">install.packages</span>(<span class="st">"nycflights13"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a><span class="fu">install.packages</span>(<span class="st">"nycflights13"</span>)</span>
+<span id="cb4-2"><a href=""></a><span class="fu">library</span>(nycflights13)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>s</p>
 </div>
+</section>
+<section id="importing-data" class="slide level2">
+<h2>Importing data</h2>
+<ul>
+<li><p>The fololowing examples will be using the <code>airports</code> and <code>flights</code> data frames.</p></li>
+<li><p>You can download the data using the following links (they are csv files):</p></li>
+</ul>
+<p><br></p>
+<p><span style="font-weight:bold;font-size:1.5em"><a href="http://tinyurl.com/nyc13airports" class="uri">http://tinyurl.com/nyc13airports</a></span></p>
+<p><br></p>
+<p><span style="font-weight:bold;font-size:1.5em"><a href="http://tinyurl.com/nyc13flights" class="uri">http://tinyurl.com/nyc13flights</a></span></p>
 </section>
 <section id="importing-data-1" class="slide level2">
 <h2>Importing data</h2>
@@ -946,6 +966,8 @@ Artwork by Allison Horst
 <h2>The <code>select()</code> function</h2>
 <p>It is also possible to select columns using <strong>helper functions</strong>.</p>
 <p>Example 3: <span class="text-outline">select “<strong>year</strong>”, and all columns that start with “<strong>m</strong>” from <code>flights</code></span></p>
+<div class="columns r-fit-text">
+<div class="column" style="width:60%;">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a><span class="fu">select</span>(flights, year, <span class="fu">starts_with</span>(<span class="st">"m"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -969,6 +991,18 @@ Artwork by Allison Horst
 15  2013     8     10</code></pre>
 </div>
 </div>
+</div><div class="column" style="width:60%;">
+<p>There are many helper functions available:</p>
+<ul>
+<li><code>starts_with()</code></li>
+<li><code>ends_with()</code></li>
+<li><code>contains()</code></li>
+<li><code>matches()</code></li>
+<li><code>num_range()</code></li>
+<li><code>one_of()</code></li>
+</ul>
+</div>
+</div>
 </section>
 <section id="the-mutate-function" class="slide level2">
 <h2>The <code>mutate()</code> function</h2>
@@ -987,7 +1021,7 @@ Artwork by Allison Horst
 <section id="the-mutate-function-1" class="slide level2">
 <h2>The <code>mutate()</code> function</h2>
 <p>Example 1:</p>
-<p><span class="text-outline r-fit-text">add a new column named <code>distance_km</code> which converts the <code>distance</code> column, which is the flight distance in miles, into km</span></p>
+<p><span class="text-outline r-fit-text">add a new column named <code>distance_km</code> which converts the <code>distance</code> column, which is the flight distance (in miles), into km</span></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21" data-code-line-numbers="1-4|2|3|1-5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a><span class="fu">mutate</span>(</span>
 <span id="cb21-2"><a href=""></a>  flights,</span>
@@ -1019,7 +1053,7 @@ Artwork by Allison Horst
 <h2>The <code>mutate()</code> function</h2>
 <p>It is also possible to add many variables in a single operation.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23" data-code-line-numbers="3-4|1-6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href=""></a><span class="fu">mutate</span>(</span>
+<div class="sourceCode cell-code" id="cb23" data-code-line-numbers="1-5|3-4|1-5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href=""></a><span class="fu">mutate</span>(</span>
 <span id="cb23-2"><a href=""></a>  flights,</span>
 <span id="cb23-3"><a href=""></a>  <span class="at">distance_km =</span> distance <span class="sc">/</span> <span class="fl">0.62137</span>,</span>
 <span id="cb23-4"><a href=""></a>  <span class="at">distance_knot =</span> distance <span class="sc">/</span> <span class="fl">1.15078</span></span>
@@ -1103,13 +1137,16 @@ Artwork by Allison Horst
 </section>
 <section id="a-note-on-date-time" class="slide level2">
 <h2>A note on date time</h2>
+<div>
 <ul>
-<li><p>With <code>lubridate</code>, you can convert time zones using the <code>with_tz()</code> function.</p></li>
-<li><p>First, we use the <code>ymd_hms()</code> function to create date time object from a string.</p>
+<li class="fragment"><p>With <code>lubridate</code>, you can convert time zones using the <code>with_tz()</code> function.</p></li>
+<li class="fragment"><p>First, we use the <code>ymd_hms()</code> function to create date time object from a string.</p>
 <ul>
-<li>The <code>tz</code> argument is used to specify the time zone.</li>
+<li class="fragment">The <code>tz</code> argument is used to specify the time zone.</li>
 </ul></li>
 </ul>
+</div>
+<div class="fragment">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href=""></a>x <span class="ot">&lt;-</span> <span class="fu">ymd_hms</span>(<span class="st">"2024-01-23 13:58:00"</span>, <span class="at">tz =</span> <span class="st">"UTC"</span>)</span>
 <span id="cb29-2"><a href=""></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1117,6 +1154,8 @@ Artwork by Allison Horst
 <pre><code>[1] "2024-01-23 13:58:00 UTC"</code></pre>
 </div>
 </div>
+</div>
+<div class="fragment">
 <ul>
 <li>The <code>with_tz()</code> function can be used to convert the time zone.</li>
 </ul>
@@ -1128,6 +1167,7 @@ Artwork by Allison Horst
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href=""></a><span class="fu">with_tz</span>(x, <span class="st">"EST"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "2024-01-23 08:58:00 EST"</code></pre>
+</div>
 </div>
 </div>
 </section>
@@ -1262,6 +1302,7 @@ Types of equality and filtering joins
 </section>
 <section id="joining-airports-and-flights" class="slide level2">
 <h2>Joining airports and flights</h2>
+<p>Let’s have a look at the <code>flights</code> and <code>airports</code> data frames.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href=""></a><span class="fu">head</span>(flights)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1291,7 +1332,7 @@ Types of equality and filtering joins
 </section>
 <section id="joining-airports-and-flights-1" class="slide level2">
 <h2>Joining airports and flights</h2>
-<p>If we try to left join the <code>flights</code> and <code>airports</code> data frames, we get an error because there is no common column(s) between the two data frames.</p>
+<p>If we try to left join the <code>flights</code> and <code>airports</code> data frames, we get this error.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href=""></a><span class="fu">left_join</span>(flights, airports)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
@@ -1300,6 +1341,7 @@ Types of equality and filtering joins
 ℹ Use `cross_join()` to perform a cross-join.</code></pre>
 </div>
 </div>
+<p>This is not working because there is <strong>no common column(s)</strong> between the two data frames.</p>
 </section>
 <section id="joining-airports-and-flights-2" class="slide level2">
 <h2>Joining airports and flights</h2>
@@ -1331,7 +1373,10 @@ Types of equality and filtering joins
 </section>
 <section id="joining-airports-and-flights-3" class="slide level2">
 <h2>Joining airports and flights</h2>
-<p>We can see that some of the <code>dest</code> codes are not present in the <code>airports</code> data frame. Anti-joins can be used to keep only the rows that do not match between the two data frames.</p>
+<ul>
+<li>With a left join, we can see that some of the <code>dest</code> codes are not present in the <code>airports</code> data frame.</li>
+<li>Anti-joins can be used to keep only the rows that do not match between the two data frames.</li>
+</ul>
 <p><span class="text-outline">select all <code>flights</code> that <strong>are not present</strong> in the <code>airports</code> table</span></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href=""></a><span class="fu">anti_join</span>(flights, airports, <span class="at">by =</span> <span class="fu">join_by</span>(dest <span class="sc">==</span> faa))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1541,7 +1586,7 @@ Types of equality and filtering joins
 <div class="cell">
 <div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href=""></a>tb_pivot <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(</span>
 <span id="cb66-2"><a href=""></a>  <span class="at">data =</span> tb,</span>
-<span id="cb66-3"><a href=""></a>  <span class="at">cols =</span> <span class="sc">!</span><span class="fu">c</span>(country, year),</span>
+<span id="cb66-3"><a href=""></a>  <span class="at">cols =</span> <span class="sc">-</span><span class="fu">c</span>(country, year),</span>
 <span id="cb66-4"><a href=""></a>  <span class="at">values_to =</span> <span class="st">"count"</span>,</span>
 <span id="cb66-5"><a href=""></a>  <span class="at">names_to =</span> <span class="st">"demo"</span></span>
 <span id="cb66-6"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1641,10 +1686,11 @@ Types of equality and filtering joins
 <div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href=""></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"http://tinyurl.com/coordsdms"</span>)</span>
 <span id="cb74-2"><a href=""></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 2
+<pre><code># A tibble: 2 × 2
   lon         lat        
   &lt;chr&gt;       &lt;chr&gt;      
-1 W70° 15' 50 N46° 21' 32</code></pre>
+1 W70° 15' 50 N46° 21' 32
+2 E20° 15' 03 S6° 53' 02 </code></pre>
 </div>
 </div>
 <ul>
@@ -1658,19 +1704,35 @@ Types of equality and filtering joins
 <li><p>First, we have to replace the <code>W</code> and <code>S</code> characters by <code>-</code> to indicate that the coordinates are negative.</p></li>
 <li><p>This can be done using the <code>str_replace()</code> function from the <code>stringr</code> package.</p></li>
 </ul>
+<div class="columns">
+<div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb76" data-code-line-numbers="1-7|3-4|1-7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href=""></a>df <span class="ot">&lt;-</span> <span class="fu">mutate</span>(</span>
-<span id="cb76-2"><a href=""></a>  df,</span>
-<span id="cb76-3"><a href=""></a>  <span class="at">lon =</span> <span class="fu">str_replace</span>(lon, <span class="st">"W"</span>, <span class="st">"-"</span>),</span>
-<span id="cb76-4"><a href=""></a>  <span class="at">lat =</span> <span class="fu">str_replace</span>(lat, <span class="st">"S"</span>, <span class="st">"-"</span>)</span>
-<span id="cb76-5"><a href=""></a>)</span>
-<span id="cb76-6"><a href=""></a></span>
-<span id="cb76-7"><a href=""></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href=""></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 2
+<pre><code># A tibble: 2 × 2
   lon         lat        
   &lt;chr&gt;       &lt;chr&gt;      
-1 -70° 15' 50 N46° 21' 32</code></pre>
+1 W70° 15' 50 N46° 21' 32
+2 E20° 15' 03 S6° 53' 02 </code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb78" data-code-line-numbers="1-7|3-4|1-7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href=""></a>df <span class="ot">&lt;-</span> <span class="fu">mutate</span>(</span>
+<span id="cb78-2"><a href=""></a>  df,</span>
+<span id="cb78-3"><a href=""></a>  <span class="at">lon =</span> <span class="fu">str_replace</span>(lon, <span class="st">"W"</span>, <span class="st">"-"</span>),</span>
+<span id="cb78-4"><a href=""></a>  <span class="at">lat =</span> <span class="fu">str_replace</span>(lat, <span class="st">"S"</span>, <span class="st">"-"</span>)</span>
+<span id="cb78-5"><a href=""></a>)</span>
+<span id="cb78-6"><a href=""></a></span>
+<span id="cb78-7"><a href=""></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  lon         lat        
+  &lt;chr&gt;       &lt;chr&gt;      
+1 -70° 15' 50 N46° 21' 32
+2 E20° 15' 03 -6° 53' 02 </code></pre>
+</div>
+</div>
 </div>
 </div>
 </section>
@@ -1678,34 +1740,35 @@ Types of equality and filtering joins
 <h2>Tidying geographical coordinates</h2>
 <p>We can now use the <code>separate_wider_delim()</code> function to separate the <code>lon</code> and <code>lat</code> columns into three columns: <code>deg</code>, <code>minutes</code> and <code>seconds</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb78" data-code-line-numbers="1-17|2-8|1-17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href=""></a><span class="co"># Separate the lon column</span></span>
-<span id="cb78-2"><a href=""></a>df <span class="ot">&lt;-</span> <span class="fu">separate_wider_delim</span>(</span>
-<span id="cb78-3"><a href=""></a>  df,</span>
-<span id="cb78-4"><a href=""></a>  lon,</span>
-<span id="cb78-5"><a href=""></a>  <span class="at">delim =</span> <span class="st">" "</span>,</span>
-<span id="cb78-6"><a href=""></a>  <span class="at">names =</span> <span class="fu">c</span>(<span class="st">"deg"</span>, <span class="st">"minutes"</span>, <span class="st">"seconds"</span>),</span>
-<span id="cb78-7"><a href=""></a>  <span class="at">names_sep =</span> <span class="st">"_"</span></span>
-<span id="cb78-8"><a href=""></a>)</span>
-<span id="cb78-9"><a href=""></a></span>
-<span id="cb78-10"><a href=""></a><span class="co"># Separate the lat column</span></span>
-<span id="cb78-11"><a href=""></a>df <span class="ot">&lt;-</span> <span class="fu">separate_wider_delim</span>(</span>
-<span id="cb78-12"><a href=""></a>  df,</span>
-<span id="cb78-13"><a href=""></a>  lat,</span>
-<span id="cb78-14"><a href=""></a>  <span class="at">delim =</span> <span class="st">" "</span>,</span>
-<span id="cb78-15"><a href=""></a>  <span class="at">names =</span> <span class="fu">c</span>(<span class="st">"deg"</span>, <span class="st">"minutes"</span>, <span class="st">"seconds"</span>),</span>
-<span id="cb78-16"><a href=""></a>  <span class="at">names_sep =</span> <span class="st">"_"</span></span>
-<span id="cb78-17"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb80" data-code-line-numbers="1-17|2-8|1-17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href=""></a><span class="co"># Separate the lon column</span></span>
+<span id="cb80-2"><a href=""></a>df <span class="ot">&lt;-</span> <span class="fu">separate_wider_delim</span>(</span>
+<span id="cb80-3"><a href=""></a>  df,</span>
+<span id="cb80-4"><a href=""></a>  lon,</span>
+<span id="cb80-5"><a href=""></a>  <span class="at">delim =</span> <span class="st">" "</span>,</span>
+<span id="cb80-6"><a href=""></a>  <span class="at">names =</span> <span class="fu">c</span>(<span class="st">"deg"</span>, <span class="st">"minutes"</span>, <span class="st">"seconds"</span>),</span>
+<span id="cb80-7"><a href=""></a>  <span class="at">names_sep =</span> <span class="st">"_"</span></span>
+<span id="cb80-8"><a href=""></a>)</span>
+<span id="cb80-9"><a href=""></a></span>
+<span id="cb80-10"><a href=""></a><span class="co"># Separate the lat column</span></span>
+<span id="cb80-11"><a href=""></a>df <span class="ot">&lt;-</span> <span class="fu">separate_wider_delim</span>(</span>
+<span id="cb80-12"><a href=""></a>  df,</span>
+<span id="cb80-13"><a href=""></a>  lat,</span>
+<span id="cb80-14"><a href=""></a>  <span class="at">delim =</span> <span class="st">" "</span>,</span>
+<span id="cb80-15"><a href=""></a>  <span class="at">names =</span> <span class="fu">c</span>(<span class="st">"deg"</span>, <span class="st">"minutes"</span>, <span class="st">"seconds"</span>),</span>
+<span id="cb80-16"><a href=""></a>  <span class="at">names_sep =</span> <span class="st">"_"</span></span>
+<span id="cb80-17"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="tidying-geographical-coordinates-3" class="slide level2">
 <h2>Tidying geographical coordinates</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href=""></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href=""></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 6
+<pre><code># A tibble: 2 × 6
   lon_deg lon_minutes lon_seconds lat_deg lat_minutes lat_seconds
   &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;      
-1 -70°    15'         50          N46°    21'         32         </code></pre>
+1 -70°    15'         50          N46°    21'         32         
+2 E20°    15'         03          -6°     53'         02         </code></pre>
 </div>
 </div>
 </section>
@@ -1715,21 +1778,19 @@ Types of equality and filtering joins
 <li>We can now convert the <code>deg</code>, <code>minutes</code> and <code>seconds</code> columns to numeric using the <code>parse_number()</code> function from the <code>readr</code> package.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href=""></a>df <span class="ot">&lt;-</span> <span class="fu">mutate</span>(</span>
-<span id="cb81-2"><a href=""></a>  df,</span>
-<span id="cb81-3"><a href=""></a>  <span class="fu">across</span>(<span class="fu">everything</span>(), parse_number)</span>
-<span id="cb81-4"><a href=""></a>)</span>
-<span id="cb81-5"><a href=""></a></span>
-<span id="cb81-6"><a href=""></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href=""></a>df <span class="ot">&lt;-</span> <span class="fu">mutate</span>(df, <span class="fu">across</span>(<span class="fu">everything</span>(), parse_number))</span>
+<span id="cb83-2"><a href=""></a></span>
+<span id="cb83-3"><a href=""></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 6
+<pre><code># A tibble: 2 × 6
   lon_deg lon_minutes lon_seconds lat_deg lat_minutes lat_seconds
     &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
-1     -70          15          50      46          21          32</code></pre>
+1     -70          15          50      46          21          32
+2      20          15           3      -6          53           2</code></pre>
 </div>
 </div>
 <ul>
-<li>Now that all columns are now numeric, they can be used to perform calculations.</li>
+<li>All columns are now numeric: they can be used to perform calculations.</li>
 </ul>
 </section>
 <section id="tidying-geographical-coordinates-5" class="slide level2">
@@ -1739,19 +1800,20 @@ Types of equality and filtering joins
 \text{decimal degrees} = \text{degrees} + \frac{\text{minutes}}{60} + \frac{\text{seconds}}{3600}
 \]</span></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href=""></a>df <span class="ot">&lt;-</span> <span class="fu">mutate</span>(</span>
-<span id="cb83-2"><a href=""></a>  df,</span>
-<span id="cb83-3"><a href=""></a>  <span class="at">lon =</span> lon_deg <span class="sc">+</span> (lon_minutes <span class="sc">/</span> <span class="dv">60</span>) <span class="sc">+</span> (lon_seconds <span class="sc">/</span> <span class="dv">3600</span>),</span>
-<span id="cb83-4"><a href=""></a>  <span class="at">lat =</span> lat_deg <span class="sc">+</span> (lat_minutes <span class="sc">/</span> <span class="dv">60</span>) <span class="sc">+</span> (lat_seconds <span class="sc">/</span> <span class="dv">3600</span>),</span>
-<span id="cb83-5"><a href=""></a>  <span class="at">.keep =</span> <span class="st">"unused"</span> <span class="co"># drop other columns</span></span>
-<span id="cb83-6"><a href=""></a>)</span>
-<span id="cb83-7"><a href=""></a></span>
-<span id="cb83-8"><a href=""></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href=""></a>df <span class="ot">&lt;-</span> <span class="fu">mutate</span>(</span>
+<span id="cb85-2"><a href=""></a>  df,</span>
+<span id="cb85-3"><a href=""></a>  <span class="at">lon =</span> lon_deg <span class="sc">+</span> (lon_minutes <span class="sc">/</span> <span class="dv">60</span>) <span class="sc">+</span> (lon_seconds <span class="sc">/</span> <span class="dv">3600</span>),</span>
+<span id="cb85-4"><a href=""></a>  <span class="at">lat =</span> lat_deg <span class="sc">+</span> (lat_minutes <span class="sc">/</span> <span class="dv">60</span>) <span class="sc">+</span> (lat_seconds <span class="sc">/</span> <span class="dv">3600</span>),</span>
+<span id="cb85-5"><a href=""></a>  <span class="at">.keep =</span> <span class="st">"unused"</span> <span class="co"># drop other columns</span></span>
+<span id="cb85-6"><a href=""></a>)</span>
+<span id="cb85-7"><a href=""></a></span>
+<span id="cb85-8"><a href=""></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 2
+<pre><code># A tibble: 2 × 2
     lon   lat
   &lt;dbl&gt; &lt;dbl&gt;
-1 -69.7  46.4</code></pre>
+1 -69.7 46.4 
+2  20.3 -5.12</code></pre>
 </div>
 </div>
 </section></section>

@@ -1,8 +1,8 @@
 library(tidyverse)
 
 df <- tibble(
-  lon = "W70° 15' 50",
-  lat = "N46° 21' 32"
+  lon = c("W70° 15' 50", "E20° 15' 03"),
+  lat = c("N46° 21' 32", "S6° 53' 02")
 )
 
 write_csv(df, "data/deg_min_sec_coordinates.csv")
