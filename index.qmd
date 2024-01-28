@@ -814,9 +814,7 @@ head(relig_income)
 To fix this, we have to pivot the data frame using the `pivot_longer()` function. We have to specify the column(s) that will be used as **identifier variables** (i.e. the columns that will not be modified) and the column(s) that will be used as **measured variables** (i.e. the columns that will be modified).
 
 ::: fragment
-
 ::: {.r-fit-text}
-
 ::: {.code}
 
 pivot_longer([\<dataframe\>]{.fragment .highlight-orange}, [\<columns to pivot\>]{.fragment .highlight-pastel})
