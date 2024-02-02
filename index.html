@@ -448,11 +448,7 @@ Pascal Guillot &amp; Philippe Massicotte
 <h2>Outline</h2>
 <div class="r-fit-text">
 <ul>
-<li class="fragment"><p><span style="font-size:1.25em"><strong>Part 1 (~ 30 minutes)</strong></span></p>
-<ul>
-<li class="fragment">Recap of what is tidy data and why it is important.</li>
-</ul></li>
-<li class="fragment"><p><span style="font-size:1.25em"><strong>Part 2 (~ 60 minutes)</strong></span></p>
+<li class="fragment"><p><span style="font-size:1.25em"><strong>Part 1 (~ 60 minutes)</strong></span></p>
 <ul>
 <li class="fragment"><p>Understand the basics of data manipulation techniques using R.</p></li>
 <li class="fragment"><p>Learn how to manipulate and transform raw data into a format suitable for analysis using <code>dplyr</code> and <code>tidyr</code>.</p>
@@ -464,7 +460,7 @@ Pascal Guillot &amp; Philippe Massicotte
 </ul></li>
 </ul></li>
 <li class="fragment"><p><span style="font-size:1.25em;"><strong>BREAK! (30 minutes)</strong></span> <i class="fa-solid fa-mug-hot" aria-label="mug-hot"></i> <i class="fa-solid fa-cookie-bite" aria-label="cookie-bite"></i></p></li>
-<li class="fragment"><p><span style="font-size:1.25em"><strong>Part 3 (~ 90 minutes)</strong></span></p>
+<li class="fragment"><p><span style="font-size:1.25em"><strong>Part 2 (~ 90 minutes)</strong></span></p>
 <ul>
 <li class="fragment">Working on your data</li>
 </ul></li>
@@ -587,8 +583,8 @@ Artwork by Allison Horst
 <section id="importing-data-into-data-frames-1" class="slide level2">
 <h2>Importing data into data frames</h2>
 <ul>
-<li><p>Most of the time, this is the data structure that will be created when importing data in R.</p></li>
-<li><p>There are many functions to import data in R using the <code>readr</code> package.</p></li>
+<li><p>Most of the time, a <strong>data frame</strong> will be created when importing tabular data in <i class="fa-brands fa-r-project" aria-label="r-project"></i>.</p></li>
+<li><p>There are many functions to import data in <i class="fa-brands fa-r-project" aria-label="r-project"></i> using the <code>readr</code> package.</p></li>
 </ul>
 <table>
 <thead>
@@ -669,30 +665,28 @@ Artwork by Allison Horst
 </section>
 <section id="the-nycflights13-datasets" class="slide level2">
 <h2>The <code>nycflights13</code> datasets</h2>
-<p>Today’s data comes from the <code>nycflights13</code> R package.</p>
-<div>
 <ul>
-<li class="fragment"><p>This package contains information about all flights that departed from New York airports (i.e., <strong>EWR</strong>, <strong>JFK</strong> and <strong>LGA</strong>) in 2013.</p></li>
-<li class="fragment"><p>Will use a reduced version of the data set for this workshop.</p></li>
-<li class="fragment"><p>Two data frames are available:</p>
-<ul>
-<li class="fragment"><code>airports</code>: Information about each airport (name, geographical coordinates)</li>
-<li class="fragment"><code>flights</code>: Information about each flight (departure time, origin and destination airports)</li>
-</ul></li>
+<li><p>Today’s data comes from the <code>nycflights13</code> <i class="fa-brands fa-r-project" aria-label="r-project"></i> package.</p></li>
+<li><p>If you want to install the package and get access to all the data:</p></li>
 </ul>
-</div>
-<div class="fragment">
-<p>If you want to install the package and get access to all the data:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a><span class="fu">install.packages</span>(<span class="st">"nycflights13"</span>)</span>
 <span id="cb4-2"><a href=""></a><span class="fu">library</span>(nycflights13)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
+<ul>
+<li><p>This package contains information about all flights that departed from New York airports (i.e., <strong>EWR</strong>, <strong>JFK</strong> and <strong>LGA</strong>) in 2013.</p></li>
+<li><p>Two data frames are available:</p>
+<ul>
+<li><code>airports</code>: Information about each airport (<em>name</em>, <em>geographical</em> <em>coordinates</em>)</li>
+<li><code>flights</code>: Information about each flight (<em>departure</em> <em>time</em>, <em>origin</em> and <em>destination</em> airports)</li>
+</ul></li>
+</ul>
 </section>
 <section id="importing-data" class="slide level2">
 <h2>Importing data</h2>
 <ul>
-<li><p>The fololowing examples will be using the <code>airports</code> and <code>flights</code> data frames.</p></li>
+<li><p>Will use a simplified version of the data set for this workshop.</p></li>
+<li><p>The following examples will be using the <code>airports</code> and <code>flights</code> data frames.</p></li>
 <li><p>You can download the data using the following links (they are csv files):</p></li>
 </ul>
 <p><br></p>
@@ -1175,7 +1169,7 @@ Artwork by Allison Horst
 <h2>The <code>summarise()</code> function</h2>
 <ul>
 <li><p>The <code>summarise()</code> function allows summarising columns from a data frame.</p></li>
-<li><p>Compress a data frame into single values (i.e.&nbsp;one row).</p>
+<li><p>It is similar to the <code>mutate()</code> function, but <em>compress</em> a data frame into single values (i.e.&nbsp;one row).</p>
 <ul>
 <li>Hence, you have to provide a function that will be used to calculate a certain value.</li>
 </ul></li>

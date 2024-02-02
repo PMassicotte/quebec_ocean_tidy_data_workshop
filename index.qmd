@@ -112,11 +112,7 @@ theme_update(
 
 ::: {.incremental .r-fit-text}
 
-- [**Part 1 (~ 30 minutes)**]{style="font-size:1.25em"}
-
-  - Recap of what is tidy data and why it is important.
-
-- [**Part 2 (~ 60 minutes)**]{style="font-size:1.25em"}
+- [**Part 1 (~ 60 minutes)**]{style="font-size:1.25em"}
 
   - Understand the basics of data manipulation techniques using R.
 
@@ -128,7 +124,7 @@ theme_update(
 
 - [**BREAK! (30 minutes)**]{style="font-size:1.25em;"} {{< fa mug-hot >}} {{< fa cookie-bite >}}
 
-- [**Part 3 (~ 90 minutes)**]{style="font-size:1.25em"}
+- [**Part 2 (~ 90 minutes)**]{style="font-size:1.25em"}
 
   - Working on your data
 
@@ -237,9 +233,9 @@ A data frame can be seen as a matrix with the difference that **columns (variabl
 
 ## Importing data into data frames
 
-- Most of the time, this is the data structure that will be created when importing data in R.
+- Most of the time, a **data frame** will be created when importing tabular data in {{< fa brands r-project >}}.
 
-- There are many functions to import data in R using the `readr` package.
+- There are many functions to import data in {{< fa brands r-project >}} using the `readr` package.
 
 | **File format**                    | **Function**   | **Package** |
 | ---------------------------------- | -------------- | ----------- |
@@ -297,24 +293,9 @@ read_csv("myfile.csv", n_max = 10)
 
 ## The `nycflights13` datasets
 
-Today's data comes from the `nycflights13` R package.
+- Today's data comes from the `nycflights13` {{< fa brands r-project >}} package.
 
-::: {.incremental}
-
-- This package contains information about all flights that departed from New York airports (i.e., **EWR**, **JFK** and **LGA**) in 2013.
-
-- Will use a reduced version of the data set for this workshop.
-
-- Two data frames are available:
-
-  - `airports`: Information about each airport (name, geographical coordinates)
-  - `flights`: Information about each flight (departure time, origin and destination airports)
-
-:::
-
-. . .
-
-If you want to install the package and get access to all the data:
+- If you want to install the package and get access to all the data:
 
 ```{r}
 #| eval: false
@@ -322,9 +303,18 @@ install.packages("nycflights13")
 library(nycflights13)
 ```
 
+- This package contains information about all flights that departed from New York airports (i.e., **EWR**, **JFK** and **LGA**) in 2013.
+
+- Two data frames are available:
+
+  - `airports`: Information about each airport (_name_, _geographical_ _coordinates_)
+  - `flights`: Information about each flight (_departure_ _time_, _origin_ and _destination_ airports)
+
 ## Importing data
 
-- The fololowing examples will be using the `airports` and `flights` data frames.
+- Will use a simplified version of the data set for this workshop.
+
+- The following examples will be using the `airports` and `flights` data frames.
 
 - You can download the data using the following links (they are csv files):
 
@@ -608,7 +598,7 @@ with_tz(x, "EST")
 
 - The `summarise()` function allows summarising columns from a data frame.
 
-- Compress a data frame into single values (i.e. one row).
+- It is similar to the `mutate()` function, but _compress_ a data frame into single values (i.e. one row).
   - Hence, you have to provide a function that will be used to calculate a certain value.
 
 ::: fragment
