@@ -998,7 +998,7 @@ df
 
 ## Tidying geographical coordinates
 
-- We can now convert the `deg`, `minutes` and `seconds` columns to numeric using the `parse_number()` function from the `readr` package.
+We can now convert the `deg`, `minutes` and `seconds` columns to numeric using the `parse_number()` function from the `readr` package.
 
 ```{r}
 df <- mutate(df, across(everything(), parse_number))
@@ -1006,7 +1006,7 @@ df <- mutate(df, across(everything(), parse_number))
 df
 ```
 
-- All columns are now numeric: they can be used to perform calculations.
+All columns are now numeric: they can be used to perform calculations.
 
 ## Tidying geographical coordinates
 

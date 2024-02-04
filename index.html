@@ -10,7 +10,7 @@
 <link href="index_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <link href="index_files/libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
 <link href="index_files/libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.4.545">
+  <meta name="generator" content="quarto-1.4.549">
 
   <meta name="author" content="Pascal Guillot &amp; Philippe Massicotte">
   <meta name="dcterms.date" content="2024-02-05">
@@ -682,8 +682,8 @@ Artwork by Allison Horst
 </ul></li>
 </ul>
 </section>
-<section id="importing-data" class="slide level2">
-<h2>Importing data</h2>
+<section id="the-nycflights13-datasets-1" class="slide level2">
+<h2>The <code>nycflights13</code> datasets</h2>
 <ul>
 <li><p>Will use a simplified version of the data set for this workshop.</p></li>
 <li><p>The following examples will be using the <code>airports</code> and <code>flights</code> data frames.</p></li>
@@ -694,7 +694,7 @@ Artwork by Allison Horst
 <p><br></p>
 <p><span style="font-weight:bold;font-size:1.5em"><a href="http://tinyurl.com/nyc13flights" class="uri">http://tinyurl.com/nyc13flights</a></span></p>
 </section>
-<section id="importing-data-1" class="slide level2">
+<section id="importing-data" class="slide level2">
 <h2>Importing data</h2>
 <p>Let’s import the airports data into a data frame named <code>airports</code>.</p>
 <div class="cell">
@@ -722,7 +722,7 @@ Artwork by Allison Horst
 </div>
 </div>
 </section>
-<section id="importing-data-2" class="slide level2">
+<section id="importing-data-1" class="slide level2">
 <h2>Importing data</h2>
 <p>Let’s import the flights data into a data frame named <code>flights</code>.</p>
 <div class="cell">
@@ -1768,9 +1768,7 @@ Types of equality and filtering joins
 </section>
 <section id="tidying-geographical-coordinates-4" class="slide level2">
 <h2>Tidying geographical coordinates</h2>
-<ul>
-<li>We can now convert the <code>deg</code>, <code>minutes</code> and <code>seconds</code> columns to numeric using the <code>parse_number()</code> function from the <code>readr</code> package.</li>
-</ul>
+<p>We can now convert the <code>deg</code>, <code>minutes</code> and <code>seconds</code> columns to numeric using the <code>parse_number()</code> function from the <code>readr</code> package.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb83"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href=""></a>df <span class="ot">&lt;-</span> <span class="fu">mutate</span>(df, <span class="fu">across</span>(<span class="fu">everything</span>(), parse_number))</span>
 <span id="cb83-2"><a href=""></a></span>
@@ -1783,9 +1781,7 @@ Types of equality and filtering joins
 2      20          15           3      -6          53           2</code></pre>
 </div>
 </div>
-<ul>
-<li>All columns are now numeric: they can be used to perform calculations.</li>
-</ul>
+<p>All columns are now numeric: they can be used to perform calculations.</p>
 </section>
 <section id="tidying-geographical-coordinates-5" class="slide level2">
 <h2>Tidying geographical coordinates</h2>
