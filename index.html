@@ -1768,9 +1768,7 @@ Types of equality and filtering joins
 </section>
 <section id="tidying-geographical-coordinates-4" class="slide level2">
 <h2>Tidying geographical coordinates</h2>
-<ul>
-<li>We can now convert the <code>deg</code>, <code>minutes</code> and <code>seconds</code> columns to numeric using the <code>parse_number()</code> function from the <code>readr</code> package.</li>
-</ul>
+<p>We can now convert the <code>deg</code>, <code>minutes</code> and <code>seconds</code> columns to numeric using the <code>parse_number()</code> function from the <code>readr</code> package.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb83"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href=""></a>df <span class="ot">&lt;-</span> <span class="fu">mutate</span>(df, <span class="fu">across</span>(<span class="fu">everything</span>(), parse_number))</span>
 <span id="cb83-2"><a href=""></a></span>
@@ -1783,9 +1781,7 @@ Types of equality and filtering joins
 2      20          15           3      -6          53           2</code></pre>
 </div>
 </div>
-<ul>
-<li>All columns are now numeric: they can be used to perform calculations.</li>
-</ul>
+<p>All columns are now numeric: they can be used to perform calculations.</p>
 </section>
 <section id="tidying-geographical-coordinates-5" class="slide level2">
 <h2>Tidying geographical coordinates</h2>
